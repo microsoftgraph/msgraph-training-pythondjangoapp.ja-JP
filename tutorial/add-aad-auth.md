@@ -1,6 +1,6 @@
 <!-- markdownlint-disable MD002 MD041 -->
 
-この演習では、Azure AD での認証をサポートするために、前の手順で作成したアプリケーションを拡張します。 これは、Microsoft Graph を呼び出すために必要な OAuth アクセストークンを取得するために必要です。 この手順では、[要求-oauthlib](https://requests-oauthlib.readthedocs.io/en/latest/)ライブラリをアプリケーションに統合します。
+この演習では、Azure AD での認証をサポートするために、前の手順で作成したアプリケーションを拡張します。 これは、Microsoft Graph を呼び出すために必要な OAuth アクセストークンを取得するために必要です。 この手順では、[要求-OAuthlib](https://requests-oauthlib.readthedocs.io/en/latest/)ライブラリをアプリケーションに統合します。
 
 という名前`oauth_settings.yml`のプロジェクトのルートに新しいファイルを作成し、次のコンテンツを追加します。
 
@@ -17,7 +17,7 @@ token_endpoint: /oauth2/v2.0/token
 を`YOUR_APP_ID_HERE`アプリケーション登録ポータルからのアプリケーション ID に置き換え、生成し`YOUR_APP_SECRET_HERE`たパスワードに置き換えます。
 
 > [!IMPORTANT]
-> git などのソース管理を使用している場合は、アプリ ID とパスワードを誤っ`oauth_settings.yml`てリークしないように、ソース管理からファイルを除外することをお勧めします。
+> Git などのソース管理を使用している場合は、アプリ ID とパスワードを誤っ`oauth_settings.yml`てリークしないように、ソース管理からファイルを除外することをお勧めします。
 
 ## <a name="implement-sign-in"></a>サインインの実装
 
@@ -102,7 +102,7 @@ def callback(request):
 
 これにより`signin` 、との 2 `callback`つの新しいビューが定義されます。
 
-この`signin`アクションは、azure ad サインイン URL を生成し`state` 、OAuth クライアントによって生成された値を保存してから、ブラウザーを azure ad サインインページにリダイレクトします。
+この`signin`アクションは、azure AD サインイン URL を生成し`state` 、OAuth クライアントによって生成された値を保存してから、ブラウザーを azure ad サインインページにリダイレクトします。
 
 この`callback`操作では、サインインの完了後に Azure がリダイレクトされます。 この操作によって`state` 、値が保存された値と一致するようになり、Azure によって送信された認証コードを使用してアクセストークンが要求されます。 その後、一時的なエラー値でアクセストークンを使用して、ホームページにリダイレクトします。 これを使用して、サインインが機能していることを確認してから、に進みます。 テストする前に、ビューをに`./tutorial/urls.py`追加する必要があります。
 
@@ -142,7 +142,7 @@ def get_user(token):
   return user.json()
 ```
 
-メソッド`get_user`は、以前に取得したアクセストークン`/me`を使用して、ユーザーのプロファイルを取得するために Microsoft Graph エンドポイントに get 要求を行います。
+メソッド`get_user`は、以前に取得したアクセストークン`/me`を使用して、ユーザーのプロファイルを取得するために Microsoft GRAPH エンドポイントに get 要求を行います。
 
 Microsoft Graph `callback`からユーザー `./tutorial/views.py`のプロファイルを取得するには、のメソッドを更新します。
 

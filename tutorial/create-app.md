@@ -46,7 +46,7 @@ CLI で、次のコマンドを実行してプロジェクトのデータベー�
 python manage.py migrate
 ```
 
-`tutorial`アプリの[urlconf](https://docs.djangoproject.com/en/2.1/topics/http/urls/)を追加します。 という名前`./tutorial` `urls.py`のディレクトリに新しいファイルを作成し、次のコードを追加します。
+`tutorial`アプリの[Urlconf](https://docs.djangoproject.com/en/2.1/topics/http/urls/)を追加します。 という名前`./tutorial` `urls.py`のディレクトリに新しいファイルを作成し、次のコードを追加します。
 
 ```python
 from django.urls import path
@@ -59,7 +59,7 @@ urlpatterns = [
 ]
 ```
 
-これで、プロジェクトの urlconf を更新してインポートします。 `./graph_tutorial/urls.py`ファイルを開き、内容を次のように置き換えます。
+これで、プロジェクトの URLconf を更新してインポートします。 `./graph_tutorial/urls.py`ファイルを開き、内容を次のように置き換えます。
 
 ```python
 from django.contrib import admin
@@ -86,8 +86,8 @@ def home(request):
 
 に進む前に、後で使用する追加のライブラリをインストールします。
 
-- [要求-oauthlib:](https://requests-oauthlib.readthedocs.io/en/latest/)サインインおよび oauth トークンフローを処理し、Microsoft Graph への呼び出しを行うための、人間用の oauth。
-- [PyYAML](https://pyyaml.org/wiki/PyYAMLDocumentation) yaml ファイルから構成を読み込むためのものです。
+- [要求-OAuthlib:](https://requests-oauthlib.readthedocs.io/en/latest/)サインインおよび oauth トークンフローを処理し、Microsoft Graph への呼び出しを行うための、人間用の oauth。
+- [PYYAML](https://pyyaml.org/wiki/PyYAMLDocumentation) yaml ファイルから構成を読み込むためのものです。
 - Microsoft Graph から返される ISO 8601 日付文字列を解析するための[python-dateutil](https://pypi.org/project/python-dateutil/) 。
 
 CLI で次のコマンドを実行します。
