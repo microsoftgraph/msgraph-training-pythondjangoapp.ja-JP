@@ -1,32 +1,32 @@
 <!-- markdownlint-disable MD002 MD041 -->
 
-<span data-ttu-id="ee42c-101">この演習では、 [Django](https://www.djangoproject.com/)を使用して web アプリを構築します。</span><span class="sxs-lookup"><span data-stu-id="ee42c-101">In this exercise you will use [Django](https://www.djangoproject.com/) to build a web app.</span></span> <span data-ttu-id="ee42c-102">Django がまだインストールされていない場合は、コマンドラインインターフェイス (CLI) から次のコマンドを使用してインストールできます。</span><span class="sxs-lookup"><span data-stu-id="ee42c-102">If you don't already have Django installed, you can install it from your command-line interface (CLI) with the following command.</span></span>
+<span data-ttu-id="4a4a2-101">この演習では、 [Django](https://www.djangoproject.com/)を使用して web アプリを構築します。</span><span class="sxs-lookup"><span data-stu-id="4a4a2-101">In this exercise you will use [Django](https://www.djangoproject.com/) to build a web app.</span></span> <span data-ttu-id="4a4a2-102">Django がまだインストールされていない場合は、コマンドラインインターフェイス (CLI) から次のコマンドを使用してインストールできます。</span><span class="sxs-lookup"><span data-stu-id="4a4a2-102">If you don't already have Django installed, you can install it from your command-line interface (CLI) with the following command.</span></span>
 
 ```Shell
 pip install Django
 ```
 
-<span data-ttu-id="ee42c-103">CLI を開き、ファイルを作成する権限があるディレクトリに移動し、次のコマンドを実行して新しい Django アプリを作成します。</span><span class="sxs-lookup"><span data-stu-id="ee42c-103">Open your CLI, navigate to a directory where you have rights to create files, and run the following command to create a new Django app.</span></span>
+<span data-ttu-id="4a4a2-103">CLI を開き、ファイルを作成する権限があるディレクトリに移動し、次のコマンドを実行して新しい Django アプリを作成します。</span><span class="sxs-lookup"><span data-stu-id="4a4a2-103">Open your CLI, navigate to a directory where you have rights to create files, and run the following command to create a new Django app.</span></span>
 
 ```Shell
 django-admin.py startproject graph_tutorial
 ```
 
-<span data-ttu-id="ee42c-104">Django は、スキャフォールディングという`graph_tutorial`名前の新しいディレクトリを作成し、Django web アプリを作成します。</span><span class="sxs-lookup"><span data-stu-id="ee42c-104">Django creates a new directory called `graph_tutorial` and scaffolds a Django web app.</span></span> <span data-ttu-id="ee42c-105">この新しいディレクトリに移動し、次のコマンドを入力してローカル web サーバーを開始します。</span><span class="sxs-lookup"><span data-stu-id="ee42c-105">Navigate to this new directory and enter the following command to start a local web server.</span></span>
+<span data-ttu-id="4a4a2-104">Django は、スキャフォールディングという`graph_tutorial`名前の新しいディレクトリを作成し、Django web アプリを作成します。</span><span class="sxs-lookup"><span data-stu-id="4a4a2-104">Django creates a new directory called `graph_tutorial` and scaffolds a Django web app.</span></span> <span data-ttu-id="4a4a2-105">この新しいディレクトリに移動し、次のコマンドを入力してローカル web サーバーを開始します。</span><span class="sxs-lookup"><span data-stu-id="4a4a2-105">Navigate to this new directory and enter the following command to start a local web server.</span></span>
 
 ```Shell
 python manage.py runserver
 ```
 
-<span data-ttu-id="ee42c-106">ブラウザーを開き、`http://localhost:8000` に移動します。</span><span class="sxs-lookup"><span data-stu-id="ee42c-106">Open your browser and navigate to `http://localhost:8000`.</span></span> <span data-ttu-id="ee42c-107">すべてが動作している場合は、Django ウェルカムページが表示されます。</span><span class="sxs-lookup"><span data-stu-id="ee42c-107">If everything is working, you will see a Django welcome page.</span></span> <span data-ttu-id="ee42c-108">これが表示されない場合は、 [Django 入門ガイド](https://www.djangoproject.com/start/)をご確認ください。</span><span class="sxs-lookup"><span data-stu-id="ee42c-108">If you don't see that, check the [Django getting started guide](https://www.djangoproject.com/start/).</span></span>
+<span data-ttu-id="4a4a2-106">ブラウザーを開き、`http://localhost:8000` に移動します。</span><span class="sxs-lookup"><span data-stu-id="4a4a2-106">Open your browser and navigate to `http://localhost:8000`.</span></span> <span data-ttu-id="4a4a2-107">すべてが動作している場合は、Django ウェルカムページが表示されます。</span><span class="sxs-lookup"><span data-stu-id="4a4a2-107">If everything is working, you will see a Django welcome page.</span></span> <span data-ttu-id="4a4a2-108">これが表示されない場合は、 [Django 入門ガイド](https://www.djangoproject.com/start/)をご確認ください。</span><span class="sxs-lookup"><span data-stu-id="4a4a2-108">If you don't see that, check the [Django getting started guide](https://www.djangoproject.com/start/).</span></span>
 
-<span data-ttu-id="ee42c-109">プロジェクトの確認が完了したので、プロジェクトにアプリを追加します。</span><span class="sxs-lookup"><span data-stu-id="ee42c-109">Now that you've verified the project, add an app to the project.</span></span> <span data-ttu-id="ee42c-110">CLI で次のコマンドを実行します。</span><span class="sxs-lookup"><span data-stu-id="ee42c-110">Run the following command in your CLI.</span></span>
+<span data-ttu-id="4a4a2-109">プロジェクトの確認が完了したので、プロジェクトにアプリを追加します。</span><span class="sxs-lookup"><span data-stu-id="4a4a2-109">Now that you've verified the project, add an app to the project.</span></span> <span data-ttu-id="4a4a2-110">CLI で次のコマンドを実行します。</span><span class="sxs-lookup"><span data-stu-id="4a4a2-110">Run the following command in your CLI.</span></span>
 
 ```Shell
 python manage.py startapp tutorial
 ```
 
-<span data-ttu-id="ee42c-111">これにより、 `./tutorial`ディレクトリに新しいアプリが作成されます。</span><span class="sxs-lookup"><span data-stu-id="ee42c-111">This creates a new app in the `./tutorial` directory.</span></span> <span data-ttu-id="ee42c-112">を開い`./graph_tutorial/settings.py`て、新しい`tutorial`アプリを`INSTALLED_APPS`設定に追加します。</span><span class="sxs-lookup"><span data-stu-id="ee42c-112">Open the `./graph_tutorial/settings.py` and add the new `tutorial` app to the `INSTALLED_APPS` setting.</span></span>
+<span data-ttu-id="4a4a2-111">これにより、 `./tutorial`ディレクトリに新しいアプリが作成されます。</span><span class="sxs-lookup"><span data-stu-id="4a4a2-111">This creates a new app in the `./tutorial` directory.</span></span> <span data-ttu-id="4a4a2-112">を開い`./graph_tutorial/settings.py`て、新しい`tutorial`アプリを`INSTALLED_APPS`設定に追加します。</span><span class="sxs-lookup"><span data-stu-id="4a4a2-112">Open the `./graph_tutorial/settings.py` and add the new `tutorial` app to the `INSTALLED_APPS` setting.</span></span>
 
 ```python
 INSTALLED_APPS = [
@@ -40,13 +40,13 @@ INSTALLED_APPS = [
 ]
 ```
 
-<span data-ttu-id="ee42c-113">CLI で、次のコマンドを実行してプロジェクトのデータベースを初期化します。</span><span class="sxs-lookup"><span data-stu-id="ee42c-113">In your CLI, run the following command to initialize the database for the project.</span></span>
+<span data-ttu-id="4a4a2-113">CLI で、次のコマンドを実行してプロジェクトのデータベースを初期化します。</span><span class="sxs-lookup"><span data-stu-id="4a4a2-113">In your CLI, run the following command to initialize the database for the project.</span></span>
 
 ```Shell
 python manage.py migrate
 ```
 
-<span data-ttu-id="ee42c-114">`tutorial`アプリの[urlconf](https://docs.djangoproject.com/en/2.1/topics/http/urls/)を追加します。</span><span class="sxs-lookup"><span data-stu-id="ee42c-114">Add a [URLconf](https://docs.djangoproject.com/en/2.1/topics/http/urls/) for the `tutorial` app.</span></span> <span data-ttu-id="ee42c-115">という名前`./tutorial` `urls.py`のディレクトリに新しいファイルを作成し、次のコードを追加します。</span><span class="sxs-lookup"><span data-stu-id="ee42c-115">Create a new file in the `./tutorial` directory named `urls.py` and add the following code.</span></span>
+<span data-ttu-id="4a4a2-114">`tutorial`アプリの[Urlconf](https://docs.djangoproject.com/en/2.1/topics/http/urls/)を追加します。</span><span class="sxs-lookup"><span data-stu-id="4a4a2-114">Add a [URLconf](https://docs.djangoproject.com/en/2.1/topics/http/urls/) for the `tutorial` app.</span></span> <span data-ttu-id="4a4a2-115">という名前`./tutorial` `urls.py`のディレクトリに新しいファイルを作成し、次のコードを追加します。</span><span class="sxs-lookup"><span data-stu-id="4a4a2-115">Create a new file in the `./tutorial` directory named `urls.py` and add the following code.</span></span>
 
 ```python
 from django.urls import path
@@ -59,7 +59,7 @@ urlpatterns = [
 ]
 ```
 
-<span data-ttu-id="ee42c-116">これで、プロジェクトの urlconf を更新してインポートします。</span><span class="sxs-lookup"><span data-stu-id="ee42c-116">Now update the project URLconf to import this one.</span></span> <span data-ttu-id="ee42c-117">`./graph_tutorial/urls.py`ファイルを開き、内容を次のように置き換えます。</span><span class="sxs-lookup"><span data-stu-id="ee42c-117">Open the `./graph_tutorial/urls.py` file and replace the contents with the following.</span></span>
+<span data-ttu-id="4a4a2-116">これで、プロジェクトの URLconf を更新してインポートします。</span><span class="sxs-lookup"><span data-stu-id="4a4a2-116">Now update the project URLconf to import this one.</span></span> <span data-ttu-id="4a4a2-117">`./graph_tutorial/urls.py`ファイルを開き、内容を次のように置き換えます。</span><span class="sxs-lookup"><span data-stu-id="4a4a2-117">Open the `./graph_tutorial/urls.py` file and replace the contents with the following.</span></span>
 
 ```python
 from django.contrib import admin
@@ -72,7 +72,7 @@ urlpatterns = [
 ]
 ```
 
-<span data-ttu-id="ee42c-118">最後に、一時的なビューを`tutorials`アプリに追加して、URL のルーティングが機能していることを確認します。</span><span class="sxs-lookup"><span data-stu-id="ee42c-118">Finally add a temporary view to the `tutorials` app to verify that URL routing is working.</span></span> <span data-ttu-id="ee42c-119">`./tutorial/views.py` ファイルを開き、次のコードを追加します。</span><span class="sxs-lookup"><span data-stu-id="ee42c-119">Open the `./tutorial/views.py` file and add the following code.</span></span>
+<span data-ttu-id="4a4a2-118">最後に、一時的なビューを`tutorials`アプリに追加して、URL のルーティングが機能していることを確認します。</span><span class="sxs-lookup"><span data-stu-id="4a4a2-118">Finally add a temporary view to the `tutorials` app to verify that URL routing is working.</span></span> <span data-ttu-id="4a4a2-119">`./tutorial/views.py` ファイルを開き、次のコードを追加します。</span><span class="sxs-lookup"><span data-stu-id="4a4a2-119">Open the `./tutorial/views.py` file and add the following code.</span></span>
 
 ```python
 from django.http import HttpResponse, HttpResponseRedirect
@@ -82,15 +82,15 @@ def home(request):
   return HttpResponse("Welcome to the tutorial.")
 ```
 
-<span data-ttu-id="ee42c-120">すべての変更を保存し、サーバーを再起動します。</span><span class="sxs-lookup"><span data-stu-id="ee42c-120">Save all of your changes and restart the server.</span></span> <span data-ttu-id="ee42c-121">`http://localhost:8000/tutorial` を参照します。</span><span class="sxs-lookup"><span data-stu-id="ee42c-121">Browse to `http://localhost:8000/tutorial`.</span></span> <span data-ttu-id="ee42c-122">が表示`Welcome to the tutorial.`</span><span class="sxs-lookup"><span data-stu-id="ee42c-122">You should see `Welcome to the tutorial.`</span></span>
+<span data-ttu-id="4a4a2-120">すべての変更を保存し、サーバーを再起動します。</span><span class="sxs-lookup"><span data-stu-id="4a4a2-120">Save all of your changes and restart the server.</span></span> <span data-ttu-id="4a4a2-121">`http://localhost:8000/tutorial` を参照します。</span><span class="sxs-lookup"><span data-stu-id="4a4a2-121">Browse to `http://localhost:8000/tutorial`.</span></span> <span data-ttu-id="4a4a2-122">が表示`Welcome to the tutorial.`</span><span class="sxs-lookup"><span data-stu-id="4a4a2-122">You should see `Welcome to the tutorial.`</span></span>
 
-<span data-ttu-id="ee42c-123">に進む前に、後で使用する追加のライブラリをインストールします。</span><span class="sxs-lookup"><span data-stu-id="ee42c-123">Before moving on, install some additional libraries that you will use later:</span></span>
+<span data-ttu-id="4a4a2-123">に進む前に、後で使用する追加のライブラリをインストールします。</span><span class="sxs-lookup"><span data-stu-id="4a4a2-123">Before moving on, install some additional libraries that you will use later:</span></span>
 
-- <span data-ttu-id="ee42c-124">[要求-oauthlib:](https://requests-oauthlib.readthedocs.io/en/latest/)サインインおよび oauth トークンフローを処理し、Microsoft Graph への呼び出しを行うための、人間用の oauth。</span><span class="sxs-lookup"><span data-stu-id="ee42c-124">[Requests-OAuthlib: OAuth for Humans](https://requests-oauthlib.readthedocs.io/en/latest/) for handling sign-in and OAuth token flows, and for making calls to Microsoft Graph.</span></span>
-- <span data-ttu-id="ee42c-125">[PyYAML](https://pyyaml.org/wiki/PyYAMLDocumentation) yaml ファイルから構成を読み込むためのものです。</span><span class="sxs-lookup"><span data-stu-id="ee42c-125">[PyYAML](https://pyyaml.org/wiki/PyYAMLDocumentation) for loading configuration from a YAML file.</span></span>
-- <span data-ttu-id="ee42c-126">Microsoft Graph から返される ISO 8601 日付文字列を解析するための[python-dateutil](https://pypi.org/project/python-dateutil/) 。</span><span class="sxs-lookup"><span data-stu-id="ee42c-126">[python-dateutil](https://pypi.org/project/python-dateutil/) for parsing ISO 8601 date strings returned from Microsoft Graph.</span></span>
+- <span data-ttu-id="4a4a2-124">[要求-OAuthlib:](https://requests-oauthlib.readthedocs.io/en/latest/)サインインおよび oauth トークンフローを処理し、Microsoft Graph への呼び出しを行うための、人間用の oauth。</span><span class="sxs-lookup"><span data-stu-id="4a4a2-124">[Requests-OAuthlib: OAuth for Humans](https://requests-oauthlib.readthedocs.io/en/latest/) for handling sign-in and OAuth token flows, and for making calls to Microsoft Graph.</span></span>
+- <span data-ttu-id="4a4a2-125">[PYYAML](https://pyyaml.org/wiki/PyYAMLDocumentation) yaml ファイルから構成を読み込むためのものです。</span><span class="sxs-lookup"><span data-stu-id="4a4a2-125">[PyYAML](https://pyyaml.org/wiki/PyYAMLDocumentation) for loading configuration from a YAML file.</span></span>
+- <span data-ttu-id="4a4a2-126">Microsoft Graph から返される ISO 8601 日付文字列を解析するための[python-dateutil](https://pypi.org/project/python-dateutil/) 。</span><span class="sxs-lookup"><span data-stu-id="4a4a2-126">[python-dateutil](https://pypi.org/project/python-dateutil/) for parsing ISO 8601 date strings returned from Microsoft Graph.</span></span>
 
-<span data-ttu-id="ee42c-127">CLI で次のコマンドを実行します。</span><span class="sxs-lookup"><span data-stu-id="ee42c-127">Run the following command in your CLI.</span></span>
+<span data-ttu-id="4a4a2-127">CLI で次のコマンドを実行します。</span><span class="sxs-lookup"><span data-stu-id="4a4a2-127">Run the following command in your CLI.</span></span>
 
 ```Shell
 pip install requests_oauthlib
@@ -98,9 +98,9 @@ pip install pyyaml
 pip install python-dateutil
 ```
 
-## <a name="design-the-app"></a><span data-ttu-id="ee42c-128">アプリを設計する</span><span class="sxs-lookup"><span data-stu-id="ee42c-128">Design the app</span></span>
+## <a name="design-the-app"></a><span data-ttu-id="4a4a2-128">アプリを設計する</span><span class="sxs-lookup"><span data-stu-id="4a4a2-128">Design the app</span></span>
 
-<span data-ttu-id="ee42c-129">最初に、テンプレートディレクトリを作成し、アプリのグローバルレイアウトを定義します。</span><span class="sxs-lookup"><span data-stu-id="ee42c-129">Start by creating a templates directory and defining a global layout for the app.</span></span> <span data-ttu-id="ee42c-130">という名前`./tutorial` `templates`のディレクトリに新しいディレクトリを作成します。</span><span class="sxs-lookup"><span data-stu-id="ee42c-130">Create a new directory in the `./tutorial` directory named `templates`.</span></span> <span data-ttu-id="ee42c-131">`templates`ディレクトリに、という名前`tutorial`の新しいディレクトリを作成します。</span><span class="sxs-lookup"><span data-stu-id="ee42c-131">In the `templates` directory, create a new directory named `tutorial`.</span></span> <span data-ttu-id="ee42c-132">最後に、という名前`layout.html`のこのディレクトリに新しいファイルを作成します。</span><span class="sxs-lookup"><span data-stu-id="ee42c-132">Finally, create a new file in this directory named `layout.html`.</span></span> <span data-ttu-id="ee42c-133">プロジェクトのルートからの相対パスがで`./tutorial/templates/tutorial/layout.html`ある必要があります。</span><span class="sxs-lookup"><span data-stu-id="ee42c-133">The relative path from the root of your project should be `./tutorial/templates/tutorial/layout.html`.</span></span> <span data-ttu-id="ee42c-134">そのファイルに次のコードを追加します。</span><span class="sxs-lookup"><span data-stu-id="ee42c-134">Add the following code in that file.</span></span>
+<span data-ttu-id="4a4a2-129">最初に、テンプレートディレクトリを作成し、アプリのグローバルレイアウトを定義します。</span><span class="sxs-lookup"><span data-stu-id="4a4a2-129">Start by creating a templates directory and defining a global layout for the app.</span></span> <span data-ttu-id="4a4a2-130">という名前`./tutorial` `templates`のディレクトリに新しいディレクトリを作成します。</span><span class="sxs-lookup"><span data-stu-id="4a4a2-130">Create a new directory in the `./tutorial` directory named `templates`.</span></span> <span data-ttu-id="4a4a2-131">`templates`ディレクトリに、という名前`tutorial`の新しいディレクトリを作成します。</span><span class="sxs-lookup"><span data-stu-id="4a4a2-131">In the `templates` directory, create a new directory named `tutorial`.</span></span> <span data-ttu-id="4a4a2-132">最後に、という名前`layout.html`のこのディレクトリに新しいファイルを作成します。</span><span class="sxs-lookup"><span data-stu-id="4a4a2-132">Finally, create a new file in this directory named `layout.html`.</span></span> <span data-ttu-id="4a4a2-133">プロジェクトのルートからの相対パスがで`./tutorial/templates/tutorial/layout.html`ある必要があります。</span><span class="sxs-lookup"><span data-stu-id="4a4a2-133">The relative path from the root of your project should be `./tutorial/templates/tutorial/layout.html`.</span></span> <span data-ttu-id="4a4a2-134">そのファイルに次のコードを追加します。</span><span class="sxs-lookup"><span data-stu-id="4a4a2-134">Add the following code in that file.</span></span>
 
 ```html
 <!DOCTYPE html>
@@ -188,9 +188,9 @@ pip install python-dateutil
 </html>
 ```
 
-<span data-ttu-id="ee42c-135">このコードでは、単純なスタイル設定[](https://fontawesome.com/)のために[ブートストラップ](http://getbootstrap.com/)が追加されています。</span><span class="sxs-lookup"><span data-stu-id="ee42c-135">This code adds [Bootstrap](http://getbootstrap.com/) for simple styling, and [Font Awesome](https://fontawesome.com/) for some simple icons.</span></span> <span data-ttu-id="ee42c-136">また、ナビゲーションバーのあるグローバルレイアウトを定義します。</span><span class="sxs-lookup"><span data-stu-id="ee42c-136">It also defines a global layout with a nav bar.</span></span>
+<span data-ttu-id="4a4a2-135">このコードでは、単純なスタイル設定[](https://fontawesome.com/)のために[ブートストラップ](http://getbootstrap.com/)が追加されています。</span><span class="sxs-lookup"><span data-stu-id="4a4a2-135">This code adds [Bootstrap](http://getbootstrap.com/) for simple styling, and [Font Awesome](https://fontawesome.com/) for some simple icons.</span></span> <span data-ttu-id="4a4a2-136">また、ナビゲーションバーのあるグローバルレイアウトを定義します。</span><span class="sxs-lookup"><span data-stu-id="4a4a2-136">It also defines a global layout with a nav bar.</span></span>
 
-<span data-ttu-id="ee42c-137">で、 `./tutorial`という名前`static`のディレクトリに新しいディレクトリを作成します。</span><span class="sxs-lookup"><span data-stu-id="ee42c-137">Now create a new directory in the `./tutorial` directory named `static`.</span></span> <span data-ttu-id="ee42c-138">`static`ディレクトリに、という名前`tutorial`の新しいディレクトリを作成します。</span><span class="sxs-lookup"><span data-stu-id="ee42c-138">In the `static` directory, create a new directory named `tutorial`.</span></span> <span data-ttu-id="ee42c-139">最後に、という名前`app.css`のこのディレクトリに新しいファイルを作成します。</span><span class="sxs-lookup"><span data-stu-id="ee42c-139">Finally, create a new file in this directory named `app.css`.</span></span> <span data-ttu-id="ee42c-140">プロジェクトのルートからの相対パスがで`./tutorial/static/tutorial/app.css`ある必要があります。</span><span class="sxs-lookup"><span data-stu-id="ee42c-140">The relative path from the root of your project should be `./tutorial/static/tutorial/app.css`.</span></span> <span data-ttu-id="ee42c-141">そのファイルに次のコードを追加します。</span><span class="sxs-lookup"><span data-stu-id="ee42c-141">Add the following code in that file.</span></span>
+<span data-ttu-id="4a4a2-137">で、 `./tutorial`という名前`static`のディレクトリに新しいディレクトリを作成します。</span><span class="sxs-lookup"><span data-stu-id="4a4a2-137">Now create a new directory in the `./tutorial` directory named `static`.</span></span> <span data-ttu-id="4a4a2-138">`static`ディレクトリに、という名前`tutorial`の新しいディレクトリを作成します。</span><span class="sxs-lookup"><span data-stu-id="4a4a2-138">In the `static` directory, create a new directory named `tutorial`.</span></span> <span data-ttu-id="4a4a2-139">最後に、という名前`app.css`のこのディレクトリに新しいファイルを作成します。</span><span class="sxs-lookup"><span data-stu-id="4a4a2-139">Finally, create a new file in this directory named `app.css`.</span></span> <span data-ttu-id="4a4a2-140">プロジェクトのルートからの相対パスがで`./tutorial/static/tutorial/app.css`ある必要があります。</span><span class="sxs-lookup"><span data-stu-id="4a4a2-140">The relative path from the root of your project should be `./tutorial/static/tutorial/app.css`.</span></span> <span data-ttu-id="4a4a2-141">そのファイルに次のコードを追加します。</span><span class="sxs-lookup"><span data-stu-id="4a4a2-141">Add the following code in that file.</span></span>
 
 ```css
 body {
@@ -204,7 +204,7 @@ body {
 }
 ```
 
-<span data-ttu-id="ee42c-142">次に、そのレイアウトを使用するホームページ用のテンプレートを作成します。</span><span class="sxs-lookup"><span data-stu-id="ee42c-142">Next, create a template for the home page that uses the layout.</span></span> <span data-ttu-id="ee42c-143">という名前`./tutorial/templates/tutorial` `home.html`のディレクトリに新しいファイルを作成し、次のコードを追加します。</span><span class="sxs-lookup"><span data-stu-id="ee42c-143">Create a new file in the `./tutorial/templates/tutorial` directory named `home.html` and add the following code.</span></span>
+<span data-ttu-id="4a4a2-142">次に、そのレイアウトを使用するホームページ用のテンプレートを作成します。</span><span class="sxs-lookup"><span data-stu-id="4a4a2-142">Next, create a template for the home page that uses the layout.</span></span> <span data-ttu-id="4a4a2-143">という名前`./tutorial/templates/tutorial` `home.html`のディレクトリに新しいファイルを作成し、次のコードを追加します。</span><span class="sxs-lookup"><span data-stu-id="4a4a2-143">Create a new file in the `./tutorial/templates/tutorial` directory named `home.html` and add the following code.</span></span>
 
 ```html
 {% extends "tutorial/layout.html" %}
@@ -222,7 +222,7 @@ body {
 {% endblock %}
 ```
 
-<span data-ttu-id="ee42c-144">このテンプレート`home`を使用するようにビューを更新します。</span><span class="sxs-lookup"><span data-stu-id="ee42c-144">Update the `home` view to use this template.</span></span> <span data-ttu-id="ee42c-145">`./tutorial/views.py`ファイルを開き、次の新しい関数を追加します。</span><span class="sxs-lookup"><span data-stu-id="ee42c-145">Open the `./tutorial/views.py` file and add the following new function.</span></span>
+<span data-ttu-id="4a4a2-144">このテンプレート`home`を使用するようにビューを更新します。</span><span class="sxs-lookup"><span data-stu-id="4a4a2-144">Update the `home` view to use this template.</span></span> <span data-ttu-id="4a4a2-145">`./tutorial/views.py`ファイルを開き、次の新しい関数を追加します。</span><span class="sxs-lookup"><span data-stu-id="4a4a2-145">Open the `./tutorial/views.py` file and add the following new function.</span></span>
 
 ```python
 def initialize_context(request):
@@ -240,7 +240,7 @@ def initialize_context(request):
   return context
 ```
 
-<span data-ttu-id="ee42c-146">次に、既存`home`のビューを次のように置き換えます。</span><span class="sxs-lookup"><span data-stu-id="ee42c-146">Then replace the existing `home` view with the following.</span></span>
+<span data-ttu-id="4a4a2-146">次に、既存`home`のビューを次のように置き換えます。</span><span class="sxs-lookup"><span data-stu-id="4a4a2-146">Then replace the existing `home` view with the following.</span></span>
 
 ```python
 def home(request):
@@ -249,6 +249,6 @@ def home(request):
   return render(request, 'tutorial/home.html', context)
 ```
 
-<span data-ttu-id="ee42c-147">すべての変更を保存し、サーバーを再起動します。</span><span class="sxs-lookup"><span data-stu-id="ee42c-147">Save all of your changes and restart the server.</span></span> <span data-ttu-id="ee42c-148">この時点で、アプリの外観は大きく異なります。</span><span class="sxs-lookup"><span data-stu-id="ee42c-148">Now, the app should look very different.</span></span>
+<span data-ttu-id="4a4a2-147">すべての変更を保存し、サーバーを再起動します。</span><span class="sxs-lookup"><span data-stu-id="4a4a2-147">Save all of your changes and restart the server.</span></span> <span data-ttu-id="4a4a2-148">この時点で、アプリの外観は大きく異なります。</span><span class="sxs-lookup"><span data-stu-id="4a4a2-148">Now, the app should look very different.</span></span>
 
 ![再設計されたホームページのスクリーンショット](./images/create-app-01.png)
