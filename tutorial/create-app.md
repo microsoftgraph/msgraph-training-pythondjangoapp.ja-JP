@@ -3,13 +3,13 @@
 この演習では、 [Django](https://www.djangoproject.com/)を使用して web アプリを構築します。 Django がまだインストールされていない場合は、コマンドラインインターフェイス (CLI) から次のコマンドを使用してインストールできます。
 
 ```Shell
-pip install Django
+pip install Django=2.2.2
 ```
 
 CLI を開き、ファイルを作成する権限があるディレクトリに移動し、次のコマンドを実行して新しい Django アプリを作成します。
 
 ```Shell
-django-admin.py startproject graph_tutorial
+django-admin startproject graph_tutorial
 ```
 
 Django は、スキャフォールディングという`graph_tutorial`名前の新しいディレクトリを作成し、Django web アプリを作成します。 この新しいディレクトリに移動し、次のコマンドを入力してローカル web サーバーを開始します。
@@ -46,7 +46,7 @@ CLI で、次のコマンドを実行してプロジェクトのデータベー�
 python manage.py migrate
 ```
 
-`tutorial`アプリの[Urlconf](https://docs.djangoproject.com/en/2.1/topics/http/urls/)を追加します。 という名前`./tutorial` `urls.py`のディレクトリに新しいファイルを作成し、次のコードを追加します。
+`tutorial`アプリの[urlconf](https://docs.djangoproject.com/en/2.1/topics/http/urls/)を追加します。 という名前`./tutorial` `urls.py`のディレクトリに新しいファイルを作成し、次のコードを追加します。
 
 ```python
 from django.urls import path
@@ -87,15 +87,15 @@ def home(request):
 に進む前に、後で使用する追加のライブラリをインストールします。
 
 - [要求-OAuthlib:](https://requests-oauthlib.readthedocs.io/en/latest/)サインインおよび oauth トークンフローを処理し、Microsoft Graph への呼び出しを行うための、人間用の oauth。
-- [PYYAML](https://pyyaml.org/wiki/PyYAMLDocumentation) yaml ファイルから構成を読み込むためのものです。
+- [PyYAML](https://pyyaml.org/wiki/PyYAMLDocumentation) yaml ファイルから構成を読み込むためのものです。
 - Microsoft Graph から返される ISO 8601 日付文字列を解析するための[python-dateutil](https://pypi.org/project/python-dateutil/) 。
 
 CLI で次のコマンドを実行します。
 
 ```Shell
-pip install requests_oauthlib
-pip install pyyaml
-pip install python-dateutil
+pip install requests_oauthlib==1.2.0
+pip install pyyaml==5.1
+pip install python-dateutil==2.8.0
 ```
 
 ## <a name="design-the-app"></a>アプリを設計する

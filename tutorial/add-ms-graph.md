@@ -29,7 +29,7 @@ def get_calendar_events(token):
 - パラメーター `$select`は、各イベントに対して返されるフィールドを、ビューが実際に使用するものだけに制限します。
 - パラメーター `$orderby`は、生成された日付と時刻で結果を並べ替えます。最新のアイテムが最初に表示されます。
 
-ここで、予定表ビューを作成します。 最初に、 `from tutorial.graph_helper import get_user`行を次のように変更します。
+ここで、予定表ビューを作成します。 で`./tutorial/views.py`、最初に`from tutorial.graph_helper import get_user`行を次のように変更します。
 
 ```python
 from tutorial.graph_helper import get_user, get_calendar_events
