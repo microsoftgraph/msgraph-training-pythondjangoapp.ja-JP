@@ -1,10 +1,10 @@
 <!-- markdownlint-disable MD002 MD041 -->
 
-<span data-ttu-id="29660-101">この演習では、Microsoft Graph をアプリケーションに組み込みます。</span><span class="sxs-lookup"><span data-stu-id="29660-101">In this exercise you will incorporate the Microsoft Graph into the application.</span></span> <span data-ttu-id="29660-102">このアプリケーションでは、[要求-OAuthlib](https://requests-oauthlib.readthedocs.io/en/latest/)ライブラリを使用して Microsoft Graph への呼び出しを行います。</span><span class="sxs-lookup"><span data-stu-id="29660-102">For this application, you will use the [Requests-OAuthlib](https://requests-oauthlib.readthedocs.io/en/latest/) library to make calls to Microsoft Graph.</span></span>
+<span data-ttu-id="fe3fb-101">この演習では、Microsoft Graph をアプリケーションに組み込みます。</span><span class="sxs-lookup"><span data-stu-id="fe3fb-101">In this exercise you will incorporate the Microsoft Graph into the application.</span></span> <span data-ttu-id="fe3fb-102">このアプリケーションでは、[要求-OAuthlib](https://requests-oauthlib.readthedocs.io/en/latest/)ライブラリを使用して Microsoft Graph への呼び出しを行います。</span><span class="sxs-lookup"><span data-stu-id="fe3fb-102">For this application, you will use the [Requests-OAuthlib](https://requests-oauthlib.readthedocs.io/en/latest/) library to make calls to Microsoft Graph.</span></span>
 
-## <a name="get-calendar-events-from-outlook"></a><span data-ttu-id="29660-103">Outlook から予定表のイベントを取得する</span><span class="sxs-lookup"><span data-stu-id="29660-103">Get calendar events from Outlook</span></span>
+## <a name="get-calendar-events-from-outlook"></a><span data-ttu-id="fe3fb-103">Outlook から予定表のイベントを取得する</span><span class="sxs-lookup"><span data-stu-id="fe3fb-103">Get calendar events from Outlook</span></span>
 
-<span data-ttu-id="29660-104">最初に、予定表イベント`./tutorial/graph_helper.py`を取得するメソッドを追加します。</span><span class="sxs-lookup"><span data-stu-id="29660-104">Start by adding a method to `./tutorial/graph_helper.py` to fetch the calendar events.</span></span> <span data-ttu-id="29660-105">次のメソッドを追加します。</span><span class="sxs-lookup"><span data-stu-id="29660-105">Add the following method.</span></span>
+<span data-ttu-id="fe3fb-104">最初に、予定表イベント`./tutorial/graph_helper.py`を取得するメソッドを追加します。</span><span class="sxs-lookup"><span data-stu-id="fe3fb-104">Start by adding a method to `./tutorial/graph_helper.py` to fetch the calendar events.</span></span> <span data-ttu-id="fe3fb-105">次のメソッドを追加します。</span><span class="sxs-lookup"><span data-stu-id="fe3fb-105">Add the following method.</span></span>
 
 ```python
 def get_calendar_events(token):
@@ -23,19 +23,19 @@ def get_calendar_events(token):
   return events.json()
 ```
 
-<span data-ttu-id="29660-106">このコードの内容を検討してください。</span><span class="sxs-lookup"><span data-stu-id="29660-106">Consider what this code is doing.</span></span>
+<span data-ttu-id="fe3fb-106">このコードの内容を検討してください。</span><span class="sxs-lookup"><span data-stu-id="fe3fb-106">Consider what this code is doing.</span></span>
 
-- <span data-ttu-id="29660-107">呼び出し先の URL は`/v1.0/me/events`になります。</span><span class="sxs-lookup"><span data-stu-id="29660-107">The URL that will be called is `/v1.0/me/events`.</span></span>
-- <span data-ttu-id="29660-108">パラメーター `$select`は、各イベントに対して返されるフィールドを、ビューが実際に使用するものだけに制限します。</span><span class="sxs-lookup"><span data-stu-id="29660-108">The `$select` parameter limits the fields returned for each events to just those the view will actually use.</span></span>
-- <span data-ttu-id="29660-109">パラメーター `$orderby`は、生成された日付と時刻で結果を並べ替えます。最新のアイテムが最初に表示されます。</span><span class="sxs-lookup"><span data-stu-id="29660-109">The `$orderby` parameter sorts the results by the date and time they were created, with the most recent item being first.</span></span>
+- <span data-ttu-id="fe3fb-107">呼び出し先の URL は`/v1.0/me/events`になります。</span><span class="sxs-lookup"><span data-stu-id="fe3fb-107">The URL that will be called is `/v1.0/me/events`.</span></span>
+- <span data-ttu-id="fe3fb-108">パラメーター `$select`は、各イベントに対して返されるフィールドを、ビューが実際に使用するものだけに制限します。</span><span class="sxs-lookup"><span data-stu-id="fe3fb-108">The `$select` parameter limits the fields returned for each events to just those the view will actually use.</span></span>
+- <span data-ttu-id="fe3fb-109">パラメーター `$orderby`は、生成された日付と時刻で結果を並べ替えます。最新のアイテムが最初に表示されます。</span><span class="sxs-lookup"><span data-stu-id="fe3fb-109">The `$orderby` parameter sorts the results by the date and time they were created, with the most recent item being first.</span></span>
 
-<span data-ttu-id="29660-110">ここで、予定表ビューを作成します。</span><span class="sxs-lookup"><span data-stu-id="29660-110">Now create a calendar view.</span></span> <span data-ttu-id="29660-111">最初に、 `from tutorial.graph_helper import get_user`行を次のように変更します。</span><span class="sxs-lookup"><span data-stu-id="29660-111">First change the `from tutorial.graph_helper import get_user` line to the following.</span></span>
+<span data-ttu-id="fe3fb-110">ここで、予定表ビューを作成します。</span><span class="sxs-lookup"><span data-stu-id="fe3fb-110">Now create a calendar view.</span></span> <span data-ttu-id="fe3fb-111">で`./tutorial/views.py`、最初に`from tutorial.graph_helper import get_user`行を次のように変更します。</span><span class="sxs-lookup"><span data-stu-id="fe3fb-111">In `./tutorial/views.py`, first change the `from tutorial.graph_helper import get_user` line to the following.</span></span>
 
 ```python
 from tutorial.graph_helper import get_user, get_calendar_events
 ```
 
-<span data-ttu-id="29660-112">次に、以下のビューを`./tutorial/views.py`に追加します。</span><span class="sxs-lookup"><span data-stu-id="29660-112">Then, add the following view to `./tutorial/views.py`.</span></span>
+<span data-ttu-id="fe3fb-112">次に、以下のビューを`./tutorial/views.py`に追加します。</span><span class="sxs-lookup"><span data-stu-id="fe3fb-112">Then, add the following view to `./tutorial/views.py`.</span></span>
 
 ```python
 def calendar(request):
@@ -52,23 +52,23 @@ def calendar(request):
   return render(request, 'tutorial/home.html', context)
 ```
 
-<span data-ttu-id="29660-113">を`./tutorial/urls.py`更新して、この新しいビューを追加します。</span><span class="sxs-lookup"><span data-stu-id="29660-113">Update `./tutorial/urls.py` to add this new view.</span></span>
+<span data-ttu-id="fe3fb-113">を`./tutorial/urls.py`更新して、この新しいビューを追加します。</span><span class="sxs-lookup"><span data-stu-id="fe3fb-113">Update `./tutorial/urls.py` to add this new view.</span></span>
 
 ```python
 path('calendar', views.calendar, name='calendar'),
 ```
 
-<span data-ttu-id="29660-114">最後に、[ `./tutorial/templates/tutorial/layout.html`このビューにリンクする**予定表**] リンクを更新します。</span><span class="sxs-lookup"><span data-stu-id="29660-114">Finally, update  the **Calendar** link in `./tutorial/templates/tutorial/layout.html` to link to this view.</span></span> <span data-ttu-id="29660-115">行を`<a class="nav-link{% if request.resolver_match.view_name == 'calendar' %} active{% endif %}" href="#">Calendar</a>`次のように置き換えます。</span><span class="sxs-lookup"><span data-stu-id="29660-115">Replace the `<a class="nav-link{% if request.resolver_match.view_name == 'calendar' %} active{% endif %}" href="#">Calendar</a>` line with the following.</span></span>
+<span data-ttu-id="fe3fb-114">最後に、[ `./tutorial/templates/tutorial/layout.html`このビューにリンクする**予定表**] リンクを更新します。</span><span class="sxs-lookup"><span data-stu-id="fe3fb-114">Finally, update  the **Calendar** link in `./tutorial/templates/tutorial/layout.html` to link to this view.</span></span> <span data-ttu-id="fe3fb-115">行を`<a class="nav-link{% if request.resolver_match.view_name == 'calendar' %} active{% endif %}" href="#">Calendar</a>`次のように置き換えます。</span><span class="sxs-lookup"><span data-stu-id="fe3fb-115">Replace the `<a class="nav-link{% if request.resolver_match.view_name == 'calendar' %} active{% endif %}" href="#">Calendar</a>` line with the following.</span></span>
 
 ```html
 <a class="nav-link{% if request.resolver_match.view_name == 'calendar' %} active{% endif %}" href="{% url 'calendar' %}">Calendar</a>
 ```
 
-<span data-ttu-id="29660-116">これで、これをテストできます。</span><span class="sxs-lookup"><span data-stu-id="29660-116">Now you can test this.</span></span> <span data-ttu-id="29660-117">サインインして、ナビゲーションバーの [**予定表**] リンクをクリックします。</span><span class="sxs-lookup"><span data-stu-id="29660-117">Sign in and click the **Calendar** link in the nav bar.</span></span> <span data-ttu-id="29660-118">すべてが動作する場合は、ユーザーの予定表にイベントの JSON ダンプが表示されます。</span><span class="sxs-lookup"><span data-stu-id="29660-118">If everything works, you should see a JSON dump of events on the user's calendar.</span></span>
+<span data-ttu-id="fe3fb-116">これで、これをテストできます。</span><span class="sxs-lookup"><span data-stu-id="fe3fb-116">Now you can test this.</span></span> <span data-ttu-id="fe3fb-117">サインインして、ナビゲーションバーの [**予定表**] リンクをクリックします。</span><span class="sxs-lookup"><span data-stu-id="fe3fb-117">Sign in and click the **Calendar** link in the nav bar.</span></span> <span data-ttu-id="fe3fb-118">すべてが動作する場合は、ユーザーの予定表にイベントの JSON ダンプが表示されます。</span><span class="sxs-lookup"><span data-stu-id="fe3fb-118">If everything works, you should see a JSON dump of events on the user's calendar.</span></span>
 
-## <a name="display-the-results"></a><span data-ttu-id="29660-119">結果を表示する</span><span class="sxs-lookup"><span data-stu-id="29660-119">Display the results</span></span>
+## <a name="display-the-results"></a><span data-ttu-id="fe3fb-119">結果を表示する</span><span class="sxs-lookup"><span data-stu-id="fe3fb-119">Display the results</span></span>
 
-<span data-ttu-id="29660-120">これで、テンプレートを追加して、よりわかりやすい方法で結果を表示することができます。</span><span class="sxs-lookup"><span data-stu-id="29660-120">Now you can add a template to display the results in a more user-friendly manner.</span></span> <span data-ttu-id="29660-121">という名前`./tutorial/templates/tutorial` `calendar.html`のディレクトリに新しいファイルを作成し、次のコードを追加します。</span><span class="sxs-lookup"><span data-stu-id="29660-121">Create a new file in the `./tutorial/templates/tutorial` directory named `calendar.html` and add the following code.</span></span>
+<span data-ttu-id="fe3fb-120">これで、テンプレートを追加して、よりわかりやすい方法で結果を表示することができます。</span><span class="sxs-lookup"><span data-stu-id="fe3fb-120">Now you can add a template to display the results in a more user-friendly manner.</span></span> <span data-ttu-id="fe3fb-121">という名前`./tutorial/templates/tutorial` `calendar.html`のディレクトリに新しいファイルを作成し、次のコードを追加します。</span><span class="sxs-lookup"><span data-stu-id="fe3fb-121">Create a new file in the `./tutorial/templates/tutorial` directory named `calendar.html` and add the following code.</span></span>
 
 ```html
 {% extends "tutorial/layout.html" %}
@@ -99,13 +99,13 @@ path('calendar', views.calendar, name='calendar'),
 {% endblock %}
 ```
 
-<span data-ttu-id="29660-122">これにより、イベントのコレクションをループ処理して、テーブル行を1つずつ追加します。</span><span class="sxs-lookup"><span data-stu-id="29660-122">That will loop through a collection of events and add a table row for each one.</span></span> <span data-ttu-id="29660-123">次`import`のステートメントを`./tutorials/views.py`ファイルの先頭に追加します。</span><span class="sxs-lookup"><span data-stu-id="29660-123">Add the following `import` statement to the top of the `./tutorials/views.py` file.</span></span>
+<span data-ttu-id="fe3fb-122">これにより、イベントのコレクションをループ処理して、テーブル行を1つずつ追加します。</span><span class="sxs-lookup"><span data-stu-id="fe3fb-122">That will loop through a collection of events and add a table row for each one.</span></span> <span data-ttu-id="fe3fb-123">次`import`のステートメントを`./tutorials/views.py`ファイルの先頭に追加します。</span><span class="sxs-lookup"><span data-stu-id="fe3fb-123">Add the following `import` statement to the top of the `./tutorials/views.py` file.</span></span>
 
 ```python
 import dateutil.parser
 ```
 
-<span data-ttu-id="29660-124">の`calendar` `./tutorial/views.py`ビューを次のコードで置き換えます。</span><span class="sxs-lookup"><span data-stu-id="29660-124">Replace the `calendar` view in `./tutorial/views.py` with the following code.</span></span>
+<span data-ttu-id="fe3fb-124">の`calendar` `./tutorial/views.py`ビューを次のコードで置き換えます。</span><span class="sxs-lookup"><span data-stu-id="fe3fb-124">Replace the `calendar` view in `./tutorial/views.py` with the following code.</span></span>
 
 ```python
 def calendar(request):
@@ -127,6 +127,6 @@ def calendar(request):
   return render(request, 'tutorial/calendar.html', context)
 ```
 
-<span data-ttu-id="29660-125">ページを更新すると、アプリがイベントの表を表示するようになります。</span><span class="sxs-lookup"><span data-stu-id="29660-125">Refresh the page and the app should now render a table of events.</span></span>
+<span data-ttu-id="fe3fb-125">ページを更新すると、アプリがイベントの表を表示するようになります。</span><span class="sxs-lookup"><span data-stu-id="fe3fb-125">Refresh the page and the app should now render a table of events.</span></span>
 
 ![イベントの表のスクリーンショット](./images/add-msgraph-01.png)
