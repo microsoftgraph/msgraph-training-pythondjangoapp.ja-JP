@@ -3,7 +3,7 @@
 この演習では、 [Django](https://www.djangoproject.com/)を使用して web アプリを構築します。 Django がまだインストールされていない場合は、コマンドラインインターフェイス (CLI) から次のコマンドを使用してインストールできます。
 
 ```Shell
-pip install Django=2.2.2
+pip install Django=2.2.5
 ```
 
 CLI を開き、ファイルを作成する権限があるディレクトリに移動し、次のコマンドを実行して新しい Django アプリを作成します。
@@ -188,7 +188,7 @@ pip install python-dateutil==2.8.0
 </html>
 ```
 
-このコードでは、単純なスタイル設定[](https://fontawesome.com/)のために[ブートストラップ](http://getbootstrap.com/)が追加されています。 また、ナビゲーションバーのあるグローバルレイアウトを定義します。
+このコードでは、単純なスタイル設定のために[ブートストラップ](http://getbootstrap.com/)が追加さ[れてい](https://fontawesome.com/)ます。 また、ナビゲーションバーのあるグローバルレイアウトを定義します。
 
 で、 `./tutorial`という名前`static`のディレクトリに新しいディレクトリを作成します。 `static`ディレクトリに、という名前`tutorial`の新しいディレクトリを作成します。 最後に、という名前`app.css`のこのディレクトリに新しいファイルを作成します。 プロジェクトのルートからの相対パスがで`./tutorial/static/tutorial/app.css`ある必要があります。 そのファイルに次のコードを追加します。
 
