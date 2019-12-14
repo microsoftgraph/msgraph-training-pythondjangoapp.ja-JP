@@ -3,7 +3,7 @@
 この演習では、 [Django](https://www.djangoproject.com/)を使用して web アプリを構築します。 Django がまだインストールされていない場合は、コマンドラインインターフェイス (CLI) から次のコマンドを使用してインストールできます。
 
 ```Shell
-pip install Django=2.2.5
+pip install Django==3.0
 ```
 
 CLI を開き、ファイルを作成する権限があるディレクトリに移動し、次のコマンドを実行して新しい Django アプリを作成します。
@@ -75,6 +75,7 @@ urlpatterns = [
 最後に、一時的なビューを`tutorials`アプリに追加して、URL のルーティングが機能していることを確認します。 `./tutorial/views.py` ファイルを開き、次のコードを追加します。
 
 ```python
+from django.shortcuts import render
 from django.http import HttpResponse, HttpResponseRedirect
 
 def home(request):
@@ -93,9 +94,9 @@ def home(request):
 CLI で次のコマンドを実行します。
 
 ```Shell
-pip install requests_oauthlib==1.2.0
-pip install pyyaml==5.1
-pip install python-dateutil==2.8.0
+pip install requests_oauthlib==1.3.0
+pip install pyyaml==5.2
+pip install python-dateutil==2.8.1
 ```
 
 ## <a name="design-the-app"></a>アプリを設計する

@@ -5,13 +5,13 @@
 という名前`oauth_settings.yml`のプロジェクトのルートに新しいファイルを作成し、次のコンテンツを追加します。
 
 ```text
-app_id: YOUR_APP_ID_HERE
-app_secret: YOUR_APP_PASSWORD_HERE
-redirect: http://localhost:8000/tutorial/callback
-scopes: openid profile offline_access user.read calendars.read
-authority: https://login.microsoftonline.com/common
-authorize_endpoint: /oauth2/v2.0/authorize
-token_endpoint: /oauth2/v2.0/token
+app_id: "YOUR_APP_ID_HERE"
+app_secret: "YOUR_APP_PASSWORD_HERE"
+redirect: "http://localhost:8000/tutorial/callback"
+scopes: "openid profile offline_access user.read calendars.read"
+authority: "https://login.microsoftonline.com/common"
+authorize_endpoint: "/oauth2/v2.0/authorize"
+token_endpoint: "/oauth2/v2.0/token"
 ```
 
 を`YOUR_APP_ID_HERE`アプリケーション登録ポータルからのアプリケーション ID に置き換え、生成し`YOUR_APP_SECRET_HERE`たパスワードに置き換えます。
