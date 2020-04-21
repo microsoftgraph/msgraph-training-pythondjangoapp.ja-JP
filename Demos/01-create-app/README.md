@@ -1,3 +1,0 @@
-# <a name="completed-module-create-a-python-django-web-app"></a>Completed モジュール: Create a Python Django web app
-
-このディレクトリにあるプロジェクトのバージョンは、 [「Python Django web app を作成する](https://docs.microsoft.com/graph/training/python-tutorial?tutorial-step=1)」に記載されているチュートリアルを完了することを反映しています。 このバージョンのプロジェクトを使用する場合は、「[ポータルでアプリを登録する」](https://docs.microsoft.com/graph/training/python-tutorial?tutorial-step=2)を開始して、チュートリアルの残りの部分を完了する必要があります。
