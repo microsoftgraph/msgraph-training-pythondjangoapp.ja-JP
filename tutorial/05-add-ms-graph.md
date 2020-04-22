@@ -2,131 +2,69 @@
 
 この演習では、Microsoft Graph をアプリケーションに組み込みます。 このアプリケーションでは、[要求-OAuthlib](https://requests-oauthlib.readthedocs.io/en/latest/)ライブラリを使用して Microsoft Graph への呼び出しを行います。
 
-## <a name="get-calendar-events-from-outlook"></a>Outlook から予定表のイベントを取得する
+## <a name="get-calendar-events-from-outlook"></a>Outlook からカレンダー イベントを取得する
 
-最初に、予定表イベント`./tutorial/graph_helper.py`を取得するメソッドを追加します。 次のメソッドを追加します。
+1. 最初に、 **/tutorial/graph_helper py**にメソッドを追加して、予定表イベントを取得します。 次のメソッドを追加します。
 
-```python
-def get_calendar_events(token):
-  graph_client = OAuth2Session(token=token)
+    :::code language="python" source="../demo/graph_tutorial/tutorial/graph_helper.py" id="GetCalendarSnippet":::
 
-  # Configure query parameters to
-  # modify the results
-  query_params = {
-    '$select': 'subject,organizer,start,end',
-    '$orderby': 'createdDateTime DESC'
-  }
+    このコードの実行内容を考えましょう。
 
-  # Send GET to /me/events
-  events = graph_client.get('{0}/me/events'.format(graph_url), params=query_params)
-  # Return the JSON result
-  return events.json()
-```
+    - 呼び出される URL は `/v1.0/me/events` です。
+    - パラメーター `$select`は、各イベントに対して返されるフィールドを、ビューが実際に使用するものだけに制限します。
+    - パラメーター `$orderby`は、生成された日付と時刻で結果を並べ替えます。最新のアイテムが最初に表示されます。
 
-このコードの内容を検討してください。
+1. **./Tutorial/views.py**で、 `from tutorial.graph_helper import get_user`行を次のように変更します。
 
-- 呼び出し先の URL は`/v1.0/me/events`になります。
-- パラメーター `$select`は、各イベントに対して返されるフィールドを、ビューが実際に使用するものだけに制限します。
-- パラメーター `$orderby`は、生成された日付と時刻で結果を並べ替えます。最新のアイテムが最初に表示されます。
+    ```python
+    from tutorial.graph_helper import get_user, get_calendar_events
+    ```
 
-ここで、予定表ビューを作成します。 で`./tutorial/views.py`、最初に`from tutorial.graph_helper import get_user`行を次のように変更します。
+1. 次のビューを/tutorial/views.py に追加します **。**
 
-```python
-from tutorial.graph_helper import get_user, get_calendar_events
-```
+    ```python
+    def calendar(request):
+      context = initialize_context(request)
 
-次に、以下のビューを`./tutorial/views.py`に追加します。
+      token = get_token(request)
 
-```python
-def calendar(request):
-  context = initialize_context(request)
+      events = get_calendar_events(token)
 
-  token = get_token(request)
+      context['errors'] = [
+        { 'message': 'Events', 'debug': format(events)}
+      ]
 
-  events = get_calendar_events(token)
+      return render(request, 'tutorial/home.html', context)
+    ```
 
-  context['errors'] = [
-    { 'message': 'Events', 'debug': format(events)}
-  ]
+1. **/Tutorial/urls.py**を開き、既存`path`のステートメント`calendar`を次のように置き換えます。
 
-  return render(request, 'tutorial/home.html', context)
-```
+    ```python
+    path('calendar', views.calendar, name='calendar'),
+    ```
 
-を`./tutorial/urls.py`更新して、この新しいビューを追加します。
+1. サインインして、ナビゲーションバーの [**予定表**] リンクをクリックします。 すべてが正常に機能していれば、ユーザーのカレンダーにイベントの JSON ダンプが表示されます。
 
-```python
-path('calendar', views.calendar, name='calendar'),
-```
+## <a name="display-the-results"></a>結果の表示
 
-最後に、[ `./tutorial/templates/tutorial/layout.html`このビューにリンクする**予定表**] リンクを更新します。 行を`<a class="nav-link{% if request.resolver_match.view_name == 'calendar' %} active{% endif %}" href="#">Calendar</a>`次のように置き換えます。
+これで、テンプレートを追加して、よりわかりやすい方法で結果を表示することができます。
 
-```html
-<a class="nav-link{% if request.resolver_match.view_name == 'calendar' %} active{% endif %}" href="{% url 'calendar' %}">Calendar</a>
-```
+1. という名前`calendar.html`の **/tutorial/templates/tutorial**ディレクトリに新しいファイルを作成し、次のコードを追加します。
 
-これで、これをテストできます。 サインインして、ナビゲーションバーの [**予定表**] リンクをクリックします。 すべてが動作する場合は、ユーザーの予定表にイベントの JSON ダンプが表示されます。
+    :::code language="html" source="../demo/graph_tutorial/tutorial/templates/tutorial/calendar.html" id="CalendarSnippet":::
 
-## <a name="display-the-results"></a>結果を表示する
+    これにより、イベントのコレクションがループされ、各イベントにテーブル行が追加されます。
 
-これで、テンプレートを追加して、よりわかりやすい方法で結果を表示することができます。 という名前`./tutorial/templates/tutorial` `calendar.html`のディレクトリに新しいファイルを作成し、次のコードを追加します。
+1. /Tutorials/views.py ファイルの`import`先頭に次のステートメントを **./tutorials/views.py**追加します。
 
-```html
-{% extends "tutorial/layout.html" %}
-{% block content %}
-<h1>Calendar</h1>
-<table class="table">
-  <thead>
-    <tr>
-      <th scope="col">Organizer</th>
-      <th scope="col">Subject</th>
-      <th scope="col">Start</th>
-      <th scope="col">End</th>
-    </tr>
-  </thead>
-  <tbody>
-    {% if events %}
-      {% for event in events %}
-        <tr>
-          <td>{{ event.organizer.emailAddress.name }}</td>
-          <td>{{ event.subject }}</td>
-          <td>{{ event.start.dateTime|date:'SHORT_DATETIME_FORMAT' }}</td>
-          <td>{{ event.end.dateTime|date:'SHORT_DATETIME_FORMAT' }}</td>
-        </tr>
-      {% endfor %}
-    {% endif %}
-  </tbody>
-</table>
-{% endblock %}
-```
+    ```python
+    import dateutil.parser
+    ```
 
-これにより、イベントのコレクションをループ処理して、テーブル行を1つずつ追加します。 次`import`のステートメントを`./tutorials/views.py`ファイルの先頭に追加します。
+1. /Tutorial/views.py の`calendar`ビューを **./tutorial/views.py**次のコードに置き換えます。
 
-```python
-import dateutil.parser
-```
+    :::code language="python" source="../demo/graph_tutorial/tutorial/views.py" id="CalendarViewSnippet":::
 
-の`calendar` `./tutorial/views.py`ビューを次のコードで置き換えます。
+1. ページを更新すると、アプリがイベントの表を表示するようになります。
 
-```python
-def calendar(request):
-  context = initialize_context(request)
-
-  token = get_token(request)
-
-  events = get_calendar_events(token)
-
-  if events:
-    # Convert the ISO 8601 date times to a datetime object
-    # This allows the Django template to format the value nicely
-    for event in events['value']:
-      event['start']['dateTime'] = dateutil.parser.parse(event['start']['dateTime'])
-      event['end']['dateTime'] = dateutil.parser.parse(event['end']['dateTime'])
-
-    context['events'] = events['value']
-
-  return render(request, 'tutorial/calendar.html', context)
-```
-
-ページを更新すると、アプリがイベントの表を表示するようになります。
-
-![イベントの表のスクリーンショット](./images/add-msgraph-01.png)
+    ![イベント表のスクリーンショット](./images/add-msgraph-01.png)
