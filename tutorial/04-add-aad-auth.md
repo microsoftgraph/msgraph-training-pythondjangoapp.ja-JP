@@ -1,168 +1,133 @@
 <!-- markdownlint-disable MD002 MD041 -->
 
-この演習では、Azure AD での認証をサポートするために、前の手順で作成したアプリケーションを拡張します。 これは、Microsoft Graph を呼び出すために必要な OAuth アクセストークンを取得するために必要です。 この手順では、[要求-OAuthlib](https://requests-oauthlib.readthedocs.io/en/latest/)ライブラリをアプリケーションに統合します。
+この演習では、前の演習のアプリケーションを拡張して、Azure AD での認証をサポートします。 これは、Microsoft Graph を呼び出すのに必要な OAuth アクセス トークンを取得するために必要です。 この手順では [、MsAL for Python ライブラリを](https://github.com/AzureAD/microsoft-authentication-library-for-python) アプリケーションに統合します。
 
-1. という名前`oauth_settings.yml`のプロジェクトのルートに新しいファイルを作成し、次のコンテンツを追加します。
+1. プロジェクトのルートに新しいファイルを作成し、次 `oauth_settings.yml` のコンテンツを追加します。
 
     :::code language="ini" source="../demo/graph_tutorial/oauth_settings.yml.example":::
 
-1. を`YOUR_APP_ID_HERE`アプリケーション登録ポータルからのアプリケーション ID に置き換え、生成し`YOUR_APP_SECRET_HERE`たパスワードに置き換えます。
+1. アプリケーション `YOUR_APP_ID_HERE` 登録ポータルのアプリケーション ID に置き換え、生成したパスワード `YOUR_APP_SECRET_HERE` に置き換える。
 
 > [!IMPORTANT]
-> Git などのソース管理を使用している場合は、yml ファイルをソース管理から除外して、アプリ ID とパスワード**oauth_settings**が誤ってリークしないようにすることをお勧めします。
+> git などのソース管理を使用している場合は **、oauth_settings.yml** ファイルをソース管理から除外して、アプリ ID とパスワードが誤って漏洩しないようにする良い時期です。
 
 ## <a name="implement-sign-in"></a>サインインの実装
 
-1. という名前`auth_helper.py`の**チュートリアル**のディレクトリに新しいファイルを作成し、次のコードを追加します。
+1. ./tutorial ディレクトリに新しい **ファイルを作成** し、 `auth_helper.py` 次のコードを追加します。
 
     :::code language="python" source="../demo/graph_tutorial/tutorial/auth_helper.py" id="FirstCodeSnippet":::
 
-    このファイルには、認証関連のすべてのメソッドが保持されます。 は`get_sign_in_url`認証 URL を生成し、メソッド`get_token_from_code`はアクセストークンの認証応答を交換します。
+    このファイルには、認証関連のすべての方法が保持されます。 認証 URL が生成され、メソッドはアクセス トークンの `get_sign_in_flow` `get_token_from_code` 承認応答を交換します。
 
-1. /Tutorial/views.py の先頭`import`に次のステートメントを **./tutorial/views.py**追加します。
+1. `import` **./tutorial/views.py の上部に次のステートメントを追加します**。
 
     ```python
-    from django.urls import reverse
-    from tutorial.auth_helper import get_sign_in_url, get_token_from_code
+    from tutorial.auth_helper import get_sign_in_flow, get_token_from_code
     ```
 
-1. **/Tutorial/views.py**ファイルにサインインビューを追加します。
+1. **./tutorial/views.py ファイルにサインイン ビューを追加** します。
 
     :::code language="python" source="../demo/graph_tutorial/tutorial/views.py" id="SignInViewSnippet":::
 
-1. **/Tutorial/views.py**ファイルにコールバックビューを追加します。
+1. **./tutorial/views.py ファイルにコールバック ビューを追加** します。
 
     ```python
     def callback(request):
-      # Get the state saved in session
-      expected_state = request.session.pop('auth_state', '')
       # Make the token request
-      token = get_token_from_code(request.get_full_path(), expected_state)
+      result = get_token_from_code(request)
       # Temporary! Save the response in an error so it's displayed
-      request.session['flash_error'] = { 'message': 'Token retrieved', 'debug': format(token) }
+      request.session['flash_error'] = { 'message': 'Token retrieved', 'debug': format(result) }
       return HttpResponseRedirect(reverse('home'))
     ```
 
-    これらのビューの機能について検討します。
+    これらのビューの機能を検討します。
 
-    - この`signin`アクションは、azure AD サインイン URL を生成し`state` 、OAuth クライアントによって生成された値を保存してから、ブラウザーを azure ad サインインページにリダイレクトします。
+    - このアクションにより、Azure AD サインイン URL が生成され、OAuth クライアントによって生成されたフローが保存され、ブラウザーが Azure AD サインイン ページに `signin` リダイレクトされます。
 
-    - この`callback`操作では、サインインの完了後に Azure がリダイレクトされます。 この操作によって`state` 、値が保存された値と一致するようになり、Azure によって送信された認証コードを使用してアクセストークンが要求されます。 その後、一時的なエラー値でアクセストークンを使用して、ホームページにリダイレクトします。 これを使用して、サインインが機能していることを確認してから、に進みます。
+    - アクション `callback` は、サインインの完了後に Azure がリダイレクトする場所です。 このアクションは、保存されたフローと Azure によって送信されたクエリ文字列を使用して、アクセス トークンを要求します。 次に、一時的なエラー値の応答を使用して、ホーム ページにリダイレクトします。 これを使用して、サインインが機能しているか確認してから、次に進む必要があります。
 
-1. **/Tutorial/urls.py**を開き、既存`path`のステートメント`signin`を次のように置き換えます。
+1. **./tutorial/urls.py を** 開き、既存のステートメントを次のステートメント `path` `signin` に置き換える。
 
     ```python
     path('signin', views.sign_in, name='signin'),
     ```
 
-1. `callback`ビューの新しい`path`を追加します。
+1. ビューに新 `path` しいビューを追加 `callback` します。
 
     ```python
     path('callback', views.callback, name='callback'),
     ```
 
-1. サーバーを起動し、を`https://localhost:8000`参照します。 [サインイン] ボタンをクリックすると、`https://login.microsoftonline.com` にリダイレクトされます。 Microsoft アカウントを使用してログインし、要求されたアクセス許可に同意します。 ブラウザーがアプリにリダイレクトし、トークンが表示されます。
+1. サーバーを起動し、参照します `https://localhost:8000` 。 [サインイン] ボタンをクリックすると、`https://login.microsoftonline.com` にリダイレクトされます。 Microsoft アカウントでログインし、要求されたアクセス許可に同意します。 ブラウザーはアプリにリダイレクトし、アクセス トークンを含む応答を表示します。
 
 ### <a name="get-user-details"></a>ユーザーの詳細情報を取得する
 
-1. という名前`graph_helper.py`の**チュートリアル**のディレクトリに新しいファイルを作成し、次のコードを追加します。
+1. ./tutorial ディレクトリに新しい **ファイルを作成** し、 `graph_helper.py` 次のコードを追加します。
 
     :::code language="python" source="../demo/graph_tutorial/tutorial/graph_helper.py" id="FirstCodeSnippet":::
 
-    メソッド`get_user`は、以前に取得したアクセストークン`/me`を使用して、ユーザーのプロファイルを取得するために Microsoft GRAPH エンドポイントに get 要求を行います。
+    このメソッドは、以前に取得したアクセス トークンを使用して、Microsoft Graph エンドポイントに GET 要求を行い、ユーザーのプロファイル `get_user` `/me` を取得します。
 
-1. /Tutorial/views.py の`callback`メソッドを **./tutorial/views.py**更新して、Microsoft Graph からユーザーのプロファイルを取得します。 次の `import` ステートメントをファイルの一番上に追加します。
+1. `callback` **./tutorial/views.py** のメソッドを更新して、Microsoft Graph からユーザーのプロファイルを取得します。 次の `import` ステートメントをファイルの一番上に追加します。
 
     ```python
-    from tutorial.graph_helper import get_user
+    from tutorial.graph_helper import *
     ```
 
 1. `callback` メソッドを次のコードに置き換えます。
 
     ```python
     def callback(request):
-      # Get the state saved in session
-      expected_state = request.session.pop('auth_state', '')
       # Make the token request
-      token = get_token_from_code(request.get_full_path(), expected_state)
+      result = get_token_from_code(request)
 
-      # Get the user's profile
-      user = get_user(token)
+      #Get the user's profile
+      user = get_user(result['access_token'])
       # Temporary! Save the response in an error so it's displayed
-      request.session['flash_error'] = { 'message': 'Token retrieved',
-        'debug': 'User: {0}\nToken: {1}'.format(user, token) }
+      request.session['flash_error'] = { 'message': 'Token retrieved', 'debug': 'User: {0}\nToken: {1}'.format(user, result) }
       return HttpResponseRedirect(reverse('home'))
     ```
 
-新しいコードは、メソッド`get_user`を呼び出してユーザーのプロファイルを要求します。 テストのために、ユーザーオブジェクトを一時出力に追加します。
+    新しいコードは、ユーザー `get_user` のプロファイルを要求するメソッドを呼び出します。 テスト用の一時的な出力にユーザー オブジェクトを追加します。
 
-## <a name="storing-the-tokens"></a>トークンの格納
+1. **./tutorial/auth_helper.py に次の新しいメソッドを追加します**。
 
-トークンを取得できるようになったので、トークンをアプリに格納する手順を実装します。 これはサンプルアプリなので、わかりやすくするために、セッションに格納します。 実際のアプリでは、データベースのような、より信頼性の高い安全なストレージ ソリューションを使用します。
+    :::code language="python" source="../demo/graph_tutorial/tutorial/auth_helper.py" id="SecondCodeSnippet":::
 
-1. **/Tutorial/auth_helper py**に、次の新しいメソッドを追加します。
-
-    ```python
-    def store_token(request, token):
-      request.session['oauth_token'] = token
-
-    def store_user(request, user):
-      request.session['user'] = {
-        'is_authenticated': True,
-        'name': user['displayName'],
-        'email': user['mail'] if (user['mail'] != None) else user['userPrincipalName']
-      }
-
-    def get_token(request):
-      token = request.session['oauth_token']
-      return token
-
-    def remove_user_and_token(request):
-      if 'oauth_token' in request.session:
-        del request.session['oauth_token']
-
-      if 'user' in request.session:
-        del request.session['user']
-    ```
-
-1. /Tutorial/views.py の`callback`関数を **./tutorial/views.py**更新してトークンをセッションに格納し、メインページにリダイレクトします。 行を`from tutorial.auth_helper import get_sign_in_url, get_token_from_code`次のように置き換えます。
+1. `callback` **./tutorial/views.py** の関数を更新して、ユーザーをセッションに格納し、メイン ページにリダイレクトします。 行を `from tutorial.auth_helper import get_sign_in_url, get_token_from_code` 次の行に置き換える。
 
     ```python
-    from tutorial.auth_helper import get_sign_in_url, get_token_from_code, store_token, store_user, remove_user_and_token, get_token
+    from tutorial.auth_helper import get_sign_in_url, get_token_from_code, store_user, remove_user_and_token, get_token
     ```
 
-1. `callback`メソッドを次のように置き換えます。
+1. メソッドを `callback` 次に置き換える。
 
     :::code language="python" source="../demo/graph_tutorial/tutorial/views.py" id="CallbackViewSnippet":::
 
 ## <a name="implement-sign-out"></a>サインアウトを実装する
 
-1. /Tutorial/views.py に新しい`sign_out`ビューを **./tutorial/views.py**追加します。
+1. `sign_out` **./tutorial/views.py に新しいビューを追加します**。
 
     :::code language="python" source="../demo/graph_tutorial/tutorial/views.py" id="SignOutViewSnippet":::
 
-1. **/Tutorial/urls.py**を開き、既存`path`のステートメント`signout`を次のように置き換えます。
+1. **./tutorial/urls.py を** 開き、既存のステートメントを次のステートメント `path` `signout` に置き換える。
 
     ```python
     path('signout', views.sign_out, name='signout'),
     ```
 
-1. サーバーを再起動し、サインインプロセスを実行します。 ホームページに戻る必要がありますが、UI は、サインインしていることを示すように変更する必要があります。
+1. サーバーを再起動し、サインイン プロセスを実行します。 ホーム ページに戻る必要がありますが、サインイン中を示す UI が変更される必要があります。
 
     ![サインイン後のホーム ページのスクリーンショット](./images/add-aad-auth-01.png)
 
-1. 右上隅にあるユーザーアバターをクリックして、[**サインアウト**] リンクにアクセスします。 **[サインアウト]** をクリックすると、セッションがリセットされ、ホーム ページに戻ります。
+1. 右上隅にあるユーザー アバターをクリックして、[サインアウト **] リンクにアクセス** します。 **[サインアウト]** をクリックすると、セッションがリセットされ、ホーム ページに戻ります。
 
     ![[サインアウト] リンクのドロップダウン メニューのスクリーンショット](./images/add-aad-auth-02.png)
 
 ## <a name="refreshing-tokens"></a>トークンの更新
 
-この時点で、アプリケーションには、API 呼び出しの`Authorization`ヘッダーで送信されるアクセストークンがあります。 これは、アプリがユーザーに代わって Microsoft Graph にアクセスできるようにするトークンです。
+この時点で、アプリケーションはアクセス トークンを持ち、API 呼び出しのヘッダー `Authorization` で送信されます。 これは、アプリがユーザーの代わりに Microsoft Graph にアクセスできるトークンです。
 
-ただし、このトークンは一時的なものです。 トークンが発行された後、有効期限が切れる時間になります。 ここで、更新トークンが役に立ちます。 更新トークンを使用すると、ユーザーが再度サインインしなくても、アプリは新しいアクセス トークンを要求できます。 トークンの更新を実装するために、トークン管理コードを更新します。
+ただし、このトークンは一時的なものです。 トークンは発行後 1 時間で期限切れになります。 ここで、更新トークンが役に立ちます。 更新トークンを使用すると、ユーザーが再度サインインしなくても、アプリは新しいアクセス トークンを要求できます。
 
-1. `get_token` **/Tutorial/auth_helper py**の既存のメソッドを次のように置き換えます。
-
-    :::code language="python" source="../demo/graph_tutorial/tutorial/auth_helper.py" id="GetTokenSnippet":::
-
-    このメソッドは、最初にアクセストークンの有効期限が切れているか、期限切れになるかを確認します。 その場合は、更新トークンを使用して新しいトークンを取得し、次にキャッシュを更新して、新しいアクセストークンを返します。
+このサンプルでは MSAL を使用します。トークンを更新するために特定のコードを記述する必要はありません。 MSAL のメソッドは `acquire_token_silent` 、必要に応じてトークンの更新を処理します。
