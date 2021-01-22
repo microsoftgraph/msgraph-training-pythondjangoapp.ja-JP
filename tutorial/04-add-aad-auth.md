@@ -17,7 +17,7 @@
 
     :::code language="python" source="../demo/graph_tutorial/tutorial/auth_helper.py" id="FirstCodeSnippet":::
 
-    このファイルには、認証関連のすべての方法が保持されます。 認証 URL が生成され、メソッドはアクセス トークンの `get_sign_in_flow` `get_token_from_code` 承認応答を交換します。
+    このファイルには、認証関連のすべての方法が保持されます。 認証 `get_sign_in_flow` URL が生成され、メソッドはアクセス トークンの `get_token_from_code` 承認応答を交換します。
 
 1. `import` **./tutorial/views.py の上部に次のステートメントを追加します**。
 
@@ -44,9 +44,9 @@
 
     - このアクションにより、Azure AD サインイン URL が生成され、OAuth クライアントによって生成されたフローが保存され、ブラウザーが Azure AD サインイン ページに `signin` リダイレクトされます。
 
-    - アクション `callback` は、サインインの完了後に Azure がリダイレクトする場所です。 このアクションは、保存されたフローと Azure によって送信されたクエリ文字列を使用して、アクセス トークンを要求します。 次に、一時的なエラー値の応答を使用して、ホーム ページにリダイレクトします。 これを使用して、サインインが機能しているか確認してから、次に進む必要があります。
+    - アクション `callback` は、サインインの完了後に Azure がリダイレクトする場所です。 このアクションは、保存されたフローと Azure によって送信されたクエリ文字列を使用して、アクセス トークンを要求します。 その後、一時的なエラー値で応答を含むホーム ページにリダイレクトします。 これを使用して、サインインが動作しているのを確認してから、次に進む必要があります。
 
-1. **./tutorial/urls.py を** 開き、既存のステートメントを次のステートメント `path` `signin` に置き換える。
+1. **./tutorial/urls.py** を開き、既存のステートメントを次のステートメント `path` `signin` に置き換える。
 
     ```python
     path('signin', views.sign_in, name='signin'),
@@ -94,10 +94,10 @@
 
     :::code language="python" source="../demo/graph_tutorial/tutorial/auth_helper.py" id="SecondCodeSnippet":::
 
-1. `callback` **./tutorial/views.py** の関数を更新して、ユーザーをセッションに格納し、メイン ページにリダイレクトします。 行を `from tutorial.auth_helper import get_sign_in_url, get_token_from_code` 次の行に置き換える。
+1. `callback` **./tutorial/views.py** の関数を更新して、ユーザーをセッションに格納し、メイン ページにリダイレクトします。 行を `from tutorial.auth_helper import get_sign_in_flow, get_token_from_code` 次の行に置き換える。
 
     ```python
-    from tutorial.auth_helper import get_sign_in_url, get_token_from_code, store_user, remove_user_and_token, get_token
+    from tutorial.auth_helper import get_sign_in_flow, get_token_from_code, store_user, remove_user_and_token, get_token
     ```
 
 1. メソッドを `callback` 次に置き換える。
@@ -110,13 +110,13 @@
 
     :::code language="python" source="../demo/graph_tutorial/tutorial/views.py" id="SignOutViewSnippet":::
 
-1. **./tutorial/urls.py を** 開き、既存のステートメントを次のステートメント `path` `signout` に置き換える。
+1. **./tutorial/urls.py** を開き、既存のステートメントを次のステートメント `path` `signout` に置き換える。
 
     ```python
     path('signout', views.sign_out, name='signout'),
     ```
 
-1. サーバーを再起動し、サインイン プロセスを実行します。 ホーム ページに戻る必要がありますが、サインイン中を示す UI が変更される必要があります。
+1. サーバーを再起動し、サインイン プロセスを実行します。 ホーム ページに戻る必要がありますが、サインイン中を示すために UI が変更される必要があります。
 
     ![サインイン後のホーム ページのスクリーンショット](./images/add-aad-auth-01.png)
 
