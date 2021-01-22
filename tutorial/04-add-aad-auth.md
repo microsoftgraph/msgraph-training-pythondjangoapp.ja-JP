@@ -1,35 +1,35 @@
 <!-- markdownlint-disable MD002 MD041 -->
 
-<span data-ttu-id="3c8ee-101">この演習では、前の演習のアプリケーションを拡張して、Azure AD での認証をサポートします。</span><span class="sxs-lookup"><span data-stu-id="3c8ee-101">In this exercise you will extend the application from the previous exercise to support authentication with Azure AD.</span></span> <span data-ttu-id="3c8ee-102">これは、Microsoft Graph を呼び出すのに必要な OAuth アクセス トークンを取得するために必要です。</span><span class="sxs-lookup"><span data-stu-id="3c8ee-102">This is required to obtain the necessary OAuth access token to call the Microsoft Graph.</span></span> <span data-ttu-id="3c8ee-103">この手順では [、MsAL for Python ライブラリを](https://github.com/AzureAD/microsoft-authentication-library-for-python) アプリケーションに統合します。</span><span class="sxs-lookup"><span data-stu-id="3c8ee-103">In this step you will integrate the [MSAL for Python](https://github.com/AzureAD/microsoft-authentication-library-for-python) library into the application.</span></span>
+<span data-ttu-id="5ecd9-101">この演習では、前の演習のアプリケーションを拡張して、Azure AD での認証をサポートします。</span><span class="sxs-lookup"><span data-stu-id="5ecd9-101">In this exercise you will extend the application from the previous exercise to support authentication with Azure AD.</span></span> <span data-ttu-id="5ecd9-102">これは、Microsoft Graph を呼び出すのに必要な OAuth アクセス トークンを取得するために必要です。</span><span class="sxs-lookup"><span data-stu-id="5ecd9-102">This is required to obtain the necessary OAuth access token to call the Microsoft Graph.</span></span> <span data-ttu-id="5ecd9-103">この手順では [、MsAL for Python ライブラリを](https://github.com/AzureAD/microsoft-authentication-library-for-python) アプリケーションに統合します。</span><span class="sxs-lookup"><span data-stu-id="5ecd9-103">In this step you will integrate the [MSAL for Python](https://github.com/AzureAD/microsoft-authentication-library-for-python) library into the application.</span></span>
 
-1. <span data-ttu-id="3c8ee-104">プロジェクトのルートに新しいファイルを作成し、次 `oauth_settings.yml` のコンテンツを追加します。</span><span class="sxs-lookup"><span data-stu-id="3c8ee-104">Create a new file in the root of the project named `oauth_settings.yml`, and add the following content.</span></span>
+1. <span data-ttu-id="5ecd9-104">プロジェクトのルートに新しいファイルを作成し、次 `oauth_settings.yml` のコンテンツを追加します。</span><span class="sxs-lookup"><span data-stu-id="5ecd9-104">Create a new file in the root of the project named `oauth_settings.yml`, and add the following content.</span></span>
 
     :::code language="ini" source="../demo/graph_tutorial/oauth_settings.yml.example":::
 
-1. <span data-ttu-id="3c8ee-105">アプリケーション `YOUR_APP_ID_HERE` 登録ポータルのアプリケーション ID に置き換え、生成したパスワード `YOUR_APP_SECRET_HERE` に置き換える。</span><span class="sxs-lookup"><span data-stu-id="3c8ee-105">Replace `YOUR_APP_ID_HERE` with the application ID from the Application Registration Portal, and replace `YOUR_APP_SECRET_HERE` with the password you generated.</span></span>
+1. <span data-ttu-id="5ecd9-105">アプリケーション `YOUR_APP_ID_HERE` 登録ポータルのアプリケーション ID に置き換え、生成したパスワード `YOUR_APP_SECRET_HERE` に置き換える。</span><span class="sxs-lookup"><span data-stu-id="5ecd9-105">Replace `YOUR_APP_ID_HERE` with the application ID from the Application Registration Portal, and replace `YOUR_APP_SECRET_HERE` with the password you generated.</span></span>
 
 > [!IMPORTANT]
-> <span data-ttu-id="3c8ee-106">git などのソース管理を使用している場合は **、oauth_settings.yml** ファイルをソース管理から除外して、アプリ ID とパスワードが誤って漏洩しないようにする良い時期です。</span><span class="sxs-lookup"><span data-stu-id="3c8ee-106">If you're using source control such as git, now would be a good time to exclude the **oauth_settings.yml** file from source control to avoid inadvertently leaking your app ID and password.</span></span>
+> <span data-ttu-id="5ecd9-106">git などのソース管理を使用している場合は **、oauth_settings.yml** ファイルをソース管理から除外して、アプリ ID とパスワードが誤って漏洩しないようにする良い時期です。</span><span class="sxs-lookup"><span data-stu-id="5ecd9-106">If you're using source control such as git, now would be a good time to exclude the **oauth_settings.yml** file from source control to avoid inadvertently leaking your app ID and password.</span></span>
 
-## <a name="implement-sign-in"></a><span data-ttu-id="3c8ee-107">サインインの実装</span><span class="sxs-lookup"><span data-stu-id="3c8ee-107">Implement sign-in</span></span>
+## <a name="implement-sign-in"></a><span data-ttu-id="5ecd9-107">サインインの実装</span><span class="sxs-lookup"><span data-stu-id="5ecd9-107">Implement sign-in</span></span>
 
-1. <span data-ttu-id="3c8ee-108">./tutorial ディレクトリに新しい **ファイルを作成** し、 `auth_helper.py` 次のコードを追加します。</span><span class="sxs-lookup"><span data-stu-id="3c8ee-108">Create a new file in the **./tutorial** directory named `auth_helper.py` and add the following code.</span></span>
+1. <span data-ttu-id="5ecd9-108">./tutorial ディレクトリに新しい **ファイルを作成** し、 `auth_helper.py` 次のコードを追加します。</span><span class="sxs-lookup"><span data-stu-id="5ecd9-108">Create a new file in the **./tutorial** directory named `auth_helper.py` and add the following code.</span></span>
 
     :::code language="python" source="../demo/graph_tutorial/tutorial/auth_helper.py" id="FirstCodeSnippet":::
 
-    <span data-ttu-id="3c8ee-109">このファイルには、認証関連のすべての方法が保持されます。</span><span class="sxs-lookup"><span data-stu-id="3c8ee-109">This file will hold all of your authentication-related methods.</span></span> <span data-ttu-id="3c8ee-110">認証 URL が生成され、メソッドはアクセス トークンの `get_sign_in_flow` `get_token_from_code` 承認応答を交換します。</span><span class="sxs-lookup"><span data-stu-id="3c8ee-110">The `get_sign_in_flow` generates an authorization URL, and the `get_token_from_code` method exchanges the authorization response for an access token.</span></span>
+    <span data-ttu-id="5ecd9-109">このファイルには、認証関連のすべての方法が保持されます。</span><span class="sxs-lookup"><span data-stu-id="5ecd9-109">This file will hold all of your authentication-related methods.</span></span> <span data-ttu-id="5ecd9-110">認証 `get_sign_in_flow` URL が生成され、メソッドはアクセス トークンの `get_token_from_code` 承認応答を交換します。</span><span class="sxs-lookup"><span data-stu-id="5ecd9-110">The `get_sign_in_flow` generates an authorization URL, and the `get_token_from_code` method exchanges the authorization response for an access token.</span></span>
 
-1. <span data-ttu-id="3c8ee-111">`import` **./tutorial/views.py の上部に次のステートメントを追加します**。</span><span class="sxs-lookup"><span data-stu-id="3c8ee-111">Add the following `import` statement to the top of **./tutorial/views.py**.</span></span>
+1. <span data-ttu-id="5ecd9-111">`import` **./tutorial/views.py の上部に次のステートメントを追加します**。</span><span class="sxs-lookup"><span data-stu-id="5ecd9-111">Add the following `import` statement to the top of **./tutorial/views.py**.</span></span>
 
     ```python
     from tutorial.auth_helper import get_sign_in_flow, get_token_from_code
     ```
 
-1. <span data-ttu-id="3c8ee-112">**./tutorial/views.py ファイルにサインイン ビューを追加** します。</span><span class="sxs-lookup"><span data-stu-id="3c8ee-112">Add a sign-in view in the **./tutorial/views.py** file.</span></span>
+1. <span data-ttu-id="5ecd9-112">**./tutorial/views.py ファイルにサインイン ビューを追加** します。</span><span class="sxs-lookup"><span data-stu-id="5ecd9-112">Add a sign-in view in the **./tutorial/views.py** file.</span></span>
 
     :::code language="python" source="../demo/graph_tutorial/tutorial/views.py" id="SignInViewSnippet":::
 
-1. <span data-ttu-id="3c8ee-113">**./tutorial/views.py ファイルにコールバック ビューを追加** します。</span><span class="sxs-lookup"><span data-stu-id="3c8ee-113">Add a callback view in the **./tutorial/views.py** file.</span></span>
+1. <span data-ttu-id="5ecd9-113">**./tutorial/views.py ファイルにコールバック ビューを追加** します。</span><span class="sxs-lookup"><span data-stu-id="5ecd9-113">Add a callback view in the **./tutorial/views.py** file.</span></span>
 
     ```python
     def callback(request):
@@ -40,41 +40,41 @@
       return HttpResponseRedirect(reverse('home'))
     ```
 
-    <span data-ttu-id="3c8ee-114">これらのビューの機能を検討します。</span><span class="sxs-lookup"><span data-stu-id="3c8ee-114">Consider what these views do:</span></span>
+    <span data-ttu-id="5ecd9-114">これらのビューの機能を検討します。</span><span class="sxs-lookup"><span data-stu-id="5ecd9-114">Consider what these views do:</span></span>
 
-    - <span data-ttu-id="3c8ee-115">このアクションにより、Azure AD サインイン URL が生成され、OAuth クライアントによって生成されたフローが保存され、ブラウザーが Azure AD サインイン ページに `signin` リダイレクトされます。</span><span class="sxs-lookup"><span data-stu-id="3c8ee-115">The `signin` action generates the Azure AD signin URL, saves the flow generated by the OAuth client, then redirects the browser to the Azure AD signin page.</span></span>
+    - <span data-ttu-id="5ecd9-115">このアクションにより、Azure AD サインイン URL が生成され、OAuth クライアントによって生成されたフローが保存され、ブラウザーが Azure AD サインイン ページに `signin` リダイレクトされます。</span><span class="sxs-lookup"><span data-stu-id="5ecd9-115">The `signin` action generates the Azure AD signin URL, saves the flow generated by the OAuth client, then redirects the browser to the Azure AD signin page.</span></span>
 
-    - <span data-ttu-id="3c8ee-116">アクション `callback` は、サインインの完了後に Azure がリダイレクトする場所です。</span><span class="sxs-lookup"><span data-stu-id="3c8ee-116">The `callback` action is where Azure redirects after the signin is complete.</span></span> <span data-ttu-id="3c8ee-117">このアクションは、保存されたフローと Azure によって送信されたクエリ文字列を使用して、アクセス トークンを要求します。</span><span class="sxs-lookup"><span data-stu-id="3c8ee-117">That action uses the saved flow and the query string sent by Azure to request an access token.</span></span> <span data-ttu-id="3c8ee-118">次に、一時的なエラー値の応答を使用して、ホーム ページにリダイレクトします。</span><span class="sxs-lookup"><span data-stu-id="3c8ee-118">It then redirects back to the home page with the response in the temporary error value.</span></span> <span data-ttu-id="3c8ee-119">これを使用して、サインインが機能しているか確認してから、次に進む必要があります。</span><span class="sxs-lookup"><span data-stu-id="3c8ee-119">You'll use this to verify that our sign-in is working before moving on.</span></span>
+    - <span data-ttu-id="5ecd9-116">アクション `callback` は、サインインの完了後に Azure がリダイレクトする場所です。</span><span class="sxs-lookup"><span data-stu-id="5ecd9-116">The `callback` action is where Azure redirects after the signin is complete.</span></span> <span data-ttu-id="5ecd9-117">このアクションは、保存されたフローと Azure によって送信されたクエリ文字列を使用して、アクセス トークンを要求します。</span><span class="sxs-lookup"><span data-stu-id="5ecd9-117">That action uses the saved flow and the query string sent by Azure to request an access token.</span></span> <span data-ttu-id="5ecd9-118">その後、一時的なエラー値で応答を含むホーム ページにリダイレクトします。</span><span class="sxs-lookup"><span data-stu-id="5ecd9-118">It then redirects back to the home page with the response in the temporary error value.</span></span> <span data-ttu-id="5ecd9-119">これを使用して、サインインが動作しているのを確認してから、次に進む必要があります。</span><span class="sxs-lookup"><span data-stu-id="5ecd9-119">You'll use this to verify that our sign-in is working before moving on.</span></span>
 
-1. <span data-ttu-id="3c8ee-120">**./tutorial/urls.py を** 開き、既存のステートメントを次のステートメント `path` `signin` に置き換える。</span><span class="sxs-lookup"><span data-stu-id="3c8ee-120">Open **./tutorial/urls.py** and replace the existing `path` statements for `signin` with the following.</span></span>
+1. <span data-ttu-id="5ecd9-120">**./tutorial/urls.py** を開き、既存のステートメントを次のステートメント `path` `signin` に置き換える。</span><span class="sxs-lookup"><span data-stu-id="5ecd9-120">Open **./tutorial/urls.py** and replace the existing `path` statements for `signin` with the following.</span></span>
 
     ```python
     path('signin', views.sign_in, name='signin'),
     ```
 
-1. <span data-ttu-id="3c8ee-121">ビューに新 `path` しいビューを追加 `callback` します。</span><span class="sxs-lookup"><span data-stu-id="3c8ee-121">Add a new `path` for the `callback` view.</span></span>
+1. <span data-ttu-id="5ecd9-121">ビューに新 `path` しいビューを追加 `callback` します。</span><span class="sxs-lookup"><span data-stu-id="5ecd9-121">Add a new `path` for the `callback` view.</span></span>
 
     ```python
     path('callback', views.callback, name='callback'),
     ```
 
-1. <span data-ttu-id="3c8ee-122">サーバーを起動し、参照します `https://localhost:8000` 。</span><span class="sxs-lookup"><span data-stu-id="3c8ee-122">Start the server and browse to `https://localhost:8000`.</span></span> <span data-ttu-id="3c8ee-123">[サインイン] ボタンをクリックすると、`https://login.microsoftonline.com` にリダイレクトされます。</span><span class="sxs-lookup"><span data-stu-id="3c8ee-123">Click the sign-in button and you should be redirected to `https://login.microsoftonline.com`.</span></span> <span data-ttu-id="3c8ee-124">Microsoft アカウントでログインし、要求されたアクセス許可に同意します。</span><span class="sxs-lookup"><span data-stu-id="3c8ee-124">Login with your Microsoft account and consent to the requested permissions.</span></span> <span data-ttu-id="3c8ee-125">ブラウザーはアプリにリダイレクトし、アクセス トークンを含む応答を表示します。</span><span class="sxs-lookup"><span data-stu-id="3c8ee-125">The browser redirects to the app, showing the response, including the access token.</span></span>
+1. <span data-ttu-id="5ecd9-122">サーバーを起動し、参照します `https://localhost:8000` 。</span><span class="sxs-lookup"><span data-stu-id="5ecd9-122">Start the server and browse to `https://localhost:8000`.</span></span> <span data-ttu-id="5ecd9-123">[サインイン] ボタンをクリックすると、`https://login.microsoftonline.com` にリダイレクトされます。</span><span class="sxs-lookup"><span data-stu-id="5ecd9-123">Click the sign-in button and you should be redirected to `https://login.microsoftonline.com`.</span></span> <span data-ttu-id="5ecd9-124">Microsoft アカウントでログインし、要求されたアクセス許可に同意します。</span><span class="sxs-lookup"><span data-stu-id="5ecd9-124">Login with your Microsoft account and consent to the requested permissions.</span></span> <span data-ttu-id="5ecd9-125">ブラウザーはアプリにリダイレクトし、アクセス トークンを含む応答を表示します。</span><span class="sxs-lookup"><span data-stu-id="5ecd9-125">The browser redirects to the app, showing the response, including the access token.</span></span>
 
-### <a name="get-user-details"></a><span data-ttu-id="3c8ee-126">ユーザーの詳細情報を取得する</span><span class="sxs-lookup"><span data-stu-id="3c8ee-126">Get user details</span></span>
+### <a name="get-user-details"></a><span data-ttu-id="5ecd9-126">ユーザーの詳細情報を取得する</span><span class="sxs-lookup"><span data-stu-id="5ecd9-126">Get user details</span></span>
 
-1. <span data-ttu-id="3c8ee-127">./tutorial ディレクトリに新しい **ファイルを作成** し、 `graph_helper.py` 次のコードを追加します。</span><span class="sxs-lookup"><span data-stu-id="3c8ee-127">Create a new file in the **./tutorial** directory named `graph_helper.py` and add the following code.</span></span>
+1. <span data-ttu-id="5ecd9-127">./tutorial ディレクトリに新しい **ファイルを作成** し、 `graph_helper.py` 次のコードを追加します。</span><span class="sxs-lookup"><span data-stu-id="5ecd9-127">Create a new file in the **./tutorial** directory named `graph_helper.py` and add the following code.</span></span>
 
     :::code language="python" source="../demo/graph_tutorial/tutorial/graph_helper.py" id="FirstCodeSnippet":::
 
-    <span data-ttu-id="3c8ee-128">このメソッドは、以前に取得したアクセス トークンを使用して、Microsoft Graph エンドポイントに GET 要求を行い、ユーザーのプロファイル `get_user` `/me` を取得します。</span><span class="sxs-lookup"><span data-stu-id="3c8ee-128">The `get_user` method makes a GET request to the Microsoft Graph `/me` endpoint to get the user's profile, using the access token you acquired previously.</span></span>
+    <span data-ttu-id="5ecd9-128">このメソッドは、以前に取得したアクセス トークンを使用して、Microsoft Graph エンドポイントに GET 要求を行い、ユーザーのプロファイル `get_user` `/me` を取得します。</span><span class="sxs-lookup"><span data-stu-id="5ecd9-128">The `get_user` method makes a GET request to the Microsoft Graph `/me` endpoint to get the user's profile, using the access token you acquired previously.</span></span>
 
-1. <span data-ttu-id="3c8ee-129">`callback` **./tutorial/views.py** のメソッドを更新して、Microsoft Graph からユーザーのプロファイルを取得します。</span><span class="sxs-lookup"><span data-stu-id="3c8ee-129">Update the `callback` method in **./tutorial/views.py** to get the user's profile from Microsoft Graph.</span></span> <span data-ttu-id="3c8ee-130">次の `import` ステートメントをファイルの一番上に追加します。</span><span class="sxs-lookup"><span data-stu-id="3c8ee-130">Add the following `import` statement to the top of the file.</span></span>
+1. <span data-ttu-id="5ecd9-129">`callback` **./tutorial/views.py** のメソッドを更新して、Microsoft Graph からユーザーのプロファイルを取得します。</span><span class="sxs-lookup"><span data-stu-id="5ecd9-129">Update the `callback` method in **./tutorial/views.py** to get the user's profile from Microsoft Graph.</span></span> <span data-ttu-id="5ecd9-130">次の `import` ステートメントをファイルの一番上に追加します。</span><span class="sxs-lookup"><span data-stu-id="5ecd9-130">Add the following `import` statement to the top of the file.</span></span>
 
     ```python
     from tutorial.graph_helper import *
     ```
 
-1. <span data-ttu-id="3c8ee-131">`callback` メソッドを次のコードに置き換えます。</span><span class="sxs-lookup"><span data-stu-id="3c8ee-131">Replace the `callback` method with the following code.</span></span>
+1. <span data-ttu-id="5ecd9-131">`callback` メソッドを次のコードに置き換えます。</span><span class="sxs-lookup"><span data-stu-id="5ecd9-131">Replace the `callback` method with the following code.</span></span>
 
     ```python
     def callback(request):
@@ -88,46 +88,46 @@
       return HttpResponseRedirect(reverse('home'))
     ```
 
-    <span data-ttu-id="3c8ee-132">新しいコードは、ユーザー `get_user` のプロファイルを要求するメソッドを呼び出します。</span><span class="sxs-lookup"><span data-stu-id="3c8ee-132">The new code calls the `get_user` method to request the user's profile.</span></span> <span data-ttu-id="3c8ee-133">テスト用の一時的な出力にユーザー オブジェクトを追加します。</span><span class="sxs-lookup"><span data-stu-id="3c8ee-133">It adds the user object to the temporary output for testing.</span></span>
+    <span data-ttu-id="5ecd9-132">新しいコードは、ユーザー `get_user` のプロファイルを要求するメソッドを呼び出します。</span><span class="sxs-lookup"><span data-stu-id="5ecd9-132">The new code calls the `get_user` method to request the user's profile.</span></span> <span data-ttu-id="5ecd9-133">テスト用の一時的な出力にユーザー オブジェクトを追加します。</span><span class="sxs-lookup"><span data-stu-id="5ecd9-133">It adds the user object to the temporary output for testing.</span></span>
 
-1. <span data-ttu-id="3c8ee-134">**./tutorial/auth_helper.py に次の新しいメソッドを追加します**。</span><span class="sxs-lookup"><span data-stu-id="3c8ee-134">Add the following new methods to **./tutorial/auth_helper.py**.</span></span>
+1. <span data-ttu-id="5ecd9-134">**./tutorial/auth_helper.py に次の新しいメソッドを追加します**。</span><span class="sxs-lookup"><span data-stu-id="5ecd9-134">Add the following new methods to **./tutorial/auth_helper.py**.</span></span>
 
     :::code language="python" source="../demo/graph_tutorial/tutorial/auth_helper.py" id="SecondCodeSnippet":::
 
-1. <span data-ttu-id="3c8ee-135">`callback` **./tutorial/views.py** の関数を更新して、ユーザーをセッションに格納し、メイン ページにリダイレクトします。</span><span class="sxs-lookup"><span data-stu-id="3c8ee-135">Update the `callback` function in **./tutorial/views.py** to store the user in the session and redirect back to the main page.</span></span> <span data-ttu-id="3c8ee-136">行を `from tutorial.auth_helper import get_sign_in_url, get_token_from_code` 次の行に置き換える。</span><span class="sxs-lookup"><span data-stu-id="3c8ee-136">Replace the `from tutorial.auth_helper import get_sign_in_url, get_token_from_code` line with the following.</span></span>
+1. <span data-ttu-id="5ecd9-135">`callback` **./tutorial/views.py** の関数を更新して、ユーザーをセッションに格納し、メイン ページにリダイレクトします。</span><span class="sxs-lookup"><span data-stu-id="5ecd9-135">Update the `callback` function in **./tutorial/views.py** to store the user in the session and redirect back to the main page.</span></span> <span data-ttu-id="5ecd9-136">行を `from tutorial.auth_helper import get_sign_in_flow, get_token_from_code` 次の行に置き換える。</span><span class="sxs-lookup"><span data-stu-id="5ecd9-136">Replace the `from tutorial.auth_helper import get_sign_in_flow, get_token_from_code` line with the following.</span></span>
 
     ```python
-    from tutorial.auth_helper import get_sign_in_url, get_token_from_code, store_user, remove_user_and_token, get_token
+    from tutorial.auth_helper import get_sign_in_flow, get_token_from_code, store_user, remove_user_and_token, get_token
     ```
 
-1. <span data-ttu-id="3c8ee-137">メソッドを `callback` 次に置き換える。</span><span class="sxs-lookup"><span data-stu-id="3c8ee-137">Replace the `callback` method with the following.</span></span>
+1. <span data-ttu-id="5ecd9-137">メソッドを `callback` 次に置き換える。</span><span class="sxs-lookup"><span data-stu-id="5ecd9-137">Replace the `callback` method with the following.</span></span>
 
     :::code language="python" source="../demo/graph_tutorial/tutorial/views.py" id="CallbackViewSnippet":::
 
-## <a name="implement-sign-out"></a><span data-ttu-id="3c8ee-138">サインアウトを実装する</span><span class="sxs-lookup"><span data-stu-id="3c8ee-138">Implement sign-out</span></span>
+## <a name="implement-sign-out"></a><span data-ttu-id="5ecd9-138">サインアウトを実装する</span><span class="sxs-lookup"><span data-stu-id="5ecd9-138">Implement sign-out</span></span>
 
-1. <span data-ttu-id="3c8ee-139">`sign_out` **./tutorial/views.py に新しいビューを追加します**。</span><span class="sxs-lookup"><span data-stu-id="3c8ee-139">Add a new `sign_out` view in **./tutorial/views.py**.</span></span>
+1. <span data-ttu-id="5ecd9-139">`sign_out` **./tutorial/views.py に新しいビューを追加します**。</span><span class="sxs-lookup"><span data-stu-id="5ecd9-139">Add a new `sign_out` view in **./tutorial/views.py**.</span></span>
 
     :::code language="python" source="../demo/graph_tutorial/tutorial/views.py" id="SignOutViewSnippet":::
 
-1. <span data-ttu-id="3c8ee-140">**./tutorial/urls.py を** 開き、既存のステートメントを次のステートメント `path` `signout` に置き換える。</span><span class="sxs-lookup"><span data-stu-id="3c8ee-140">Open **./tutorial/urls.py** and replace the existing `path` statements for `signout` with the following.</span></span>
+1. <span data-ttu-id="5ecd9-140">**./tutorial/urls.py** を開き、既存のステートメントを次のステートメント `path` `signout` に置き換える。</span><span class="sxs-lookup"><span data-stu-id="5ecd9-140">Open **./tutorial/urls.py** and replace the existing `path` statements for `signout` with the following.</span></span>
 
     ```python
     path('signout', views.sign_out, name='signout'),
     ```
 
-1. <span data-ttu-id="3c8ee-141">サーバーを再起動し、サインイン プロセスを実行します。</span><span class="sxs-lookup"><span data-stu-id="3c8ee-141">Restart the server and go through the sign-in process.</span></span> <span data-ttu-id="3c8ee-142">ホーム ページに戻る必要がありますが、サインイン中を示す UI が変更される必要があります。</span><span class="sxs-lookup"><span data-stu-id="3c8ee-142">You should end up back on the home page, but the UI should change to indicate that you are signed-in.</span></span>
+1. <span data-ttu-id="5ecd9-141">サーバーを再起動し、サインイン プロセスを実行します。</span><span class="sxs-lookup"><span data-stu-id="5ecd9-141">Restart the server and go through the sign-in process.</span></span> <span data-ttu-id="5ecd9-142">ホーム ページに戻る必要がありますが、サインイン中を示すために UI が変更される必要があります。</span><span class="sxs-lookup"><span data-stu-id="5ecd9-142">You should end up back on the home page, but the UI should change to indicate that you are signed-in.</span></span>
 
     ![サインイン後のホーム ページのスクリーンショット](./images/add-aad-auth-01.png)
 
-1. <span data-ttu-id="3c8ee-144">右上隅にあるユーザー アバターをクリックして、[サインアウト **] リンクにアクセス** します。</span><span class="sxs-lookup"><span data-stu-id="3c8ee-144">Click the user avatar in the top right corner to access the **Sign Out** link.</span></span> <span data-ttu-id="3c8ee-145">**[サインアウト]** をクリックすると、セッションがリセットされ、ホーム ページに戻ります。</span><span class="sxs-lookup"><span data-stu-id="3c8ee-145">Clicking **Sign Out** resets the session and returns you to the home page.</span></span>
+1. <span data-ttu-id="5ecd9-144">右上隅にあるユーザー アバターをクリックして、[サインアウト **] リンクにアクセス** します。</span><span class="sxs-lookup"><span data-stu-id="5ecd9-144">Click the user avatar in the top right corner to access the **Sign Out** link.</span></span> <span data-ttu-id="5ecd9-145">**[サインアウト]** をクリックすると、セッションがリセットされ、ホーム ページに戻ります。</span><span class="sxs-lookup"><span data-stu-id="5ecd9-145">Clicking **Sign Out** resets the session and returns you to the home page.</span></span>
 
     ![[サインアウト] リンクのドロップダウン メニューのスクリーンショット](./images/add-aad-auth-02.png)
 
-## <a name="refreshing-tokens"></a><span data-ttu-id="3c8ee-147">トークンの更新</span><span class="sxs-lookup"><span data-stu-id="3c8ee-147">Refreshing tokens</span></span>
+## <a name="refreshing-tokens"></a><span data-ttu-id="5ecd9-147">トークンの更新</span><span class="sxs-lookup"><span data-stu-id="5ecd9-147">Refreshing tokens</span></span>
 
-<span data-ttu-id="3c8ee-148">この時点で、アプリケーションはアクセス トークンを持ち、API 呼び出しのヘッダー `Authorization` で送信されます。</span><span class="sxs-lookup"><span data-stu-id="3c8ee-148">At this point your application has an access token, which is sent in the `Authorization` header of API calls.</span></span> <span data-ttu-id="3c8ee-149">これは、アプリがユーザーの代わりに Microsoft Graph にアクセスできるトークンです。</span><span class="sxs-lookup"><span data-stu-id="3c8ee-149">This is the token that allows the app to access the Microsoft Graph on the user's behalf.</span></span>
+<span data-ttu-id="5ecd9-148">この時点で、アプリケーションはアクセス トークンを持ち、API 呼び出しのヘッダー `Authorization` で送信されます。</span><span class="sxs-lookup"><span data-stu-id="5ecd9-148">At this point your application has an access token, which is sent in the `Authorization` header of API calls.</span></span> <span data-ttu-id="5ecd9-149">これは、アプリがユーザーの代わりに Microsoft Graph にアクセスできるトークンです。</span><span class="sxs-lookup"><span data-stu-id="5ecd9-149">This is the token that allows the app to access the Microsoft Graph on the user's behalf.</span></span>
 
-<span data-ttu-id="3c8ee-150">ただし、このトークンは一時的なものです。</span><span class="sxs-lookup"><span data-stu-id="3c8ee-150">However, this token is short-lived.</span></span> <span data-ttu-id="3c8ee-151">トークンは発行後 1 時間で期限切れになります。</span><span class="sxs-lookup"><span data-stu-id="3c8ee-151">The token expires an hour after it is issued.</span></span> <span data-ttu-id="3c8ee-152">ここで、更新トークンが役に立ちます。</span><span class="sxs-lookup"><span data-stu-id="3c8ee-152">This is where the refresh token becomes useful.</span></span> <span data-ttu-id="3c8ee-153">更新トークンを使用すると、ユーザーが再度サインインしなくても、アプリは新しいアクセス トークンを要求できます。</span><span class="sxs-lookup"><span data-stu-id="3c8ee-153">The refresh token allows the app to request a new access token without requiring the user to sign in again.</span></span>
+<span data-ttu-id="5ecd9-150">ただし、このトークンは一時的なものです。</span><span class="sxs-lookup"><span data-stu-id="5ecd9-150">However, this token is short-lived.</span></span> <span data-ttu-id="5ecd9-151">トークンは発行後 1 時間で期限切れになります。</span><span class="sxs-lookup"><span data-stu-id="5ecd9-151">The token expires an hour after it is issued.</span></span> <span data-ttu-id="5ecd9-152">ここで、更新トークンが役に立ちます。</span><span class="sxs-lookup"><span data-stu-id="5ecd9-152">This is where the refresh token becomes useful.</span></span> <span data-ttu-id="5ecd9-153">更新トークンを使用すると、ユーザーが再度サインインしなくても、アプリは新しいアクセス トークンを要求できます。</span><span class="sxs-lookup"><span data-stu-id="5ecd9-153">The refresh token allows the app to request a new access token without requiring the user to sign in again.</span></span>
 
-<span data-ttu-id="3c8ee-154">このサンプルでは MSAL を使用します。トークンを更新するために特定のコードを記述する必要はありません。</span><span class="sxs-lookup"><span data-stu-id="3c8ee-154">Because this sample uses MSAL, you do not have to write any specific code to refresh the token.</span></span> <span data-ttu-id="3c8ee-155">MSAL のメソッドは `acquire_token_silent` 、必要に応じてトークンの更新を処理します。</span><span class="sxs-lookup"><span data-stu-id="3c8ee-155">MSAL's `acquire_token_silent` method handles refreshing the token if needed.</span></span>
+<span data-ttu-id="5ecd9-154">このサンプルでは MSAL を使用します。トークンを更新するために特定のコードを記述する必要はありません。</span><span class="sxs-lookup"><span data-stu-id="5ecd9-154">Because this sample uses MSAL, you do not have to write any specific code to refresh the token.</span></span> <span data-ttu-id="5ecd9-155">MSAL のメソッドは `acquire_token_silent` 、必要に応じてトークンの更新を処理します。</span><span class="sxs-lookup"><span data-stu-id="5ecd9-155">MSAL's `acquire_token_silent` method handles refreshing the token if needed.</span></span>
