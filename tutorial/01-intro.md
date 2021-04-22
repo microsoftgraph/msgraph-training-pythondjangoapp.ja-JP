@@ -10,15 +10,15 @@
 
 ## <a name="prerequisites"></a>前提条件
 
-このチュートリアルを開始する前に、開発用コンピューターに [Python](https://www.python.org/) [(python](https://pypi.org/project/pip/)付き) がインストールされている必要があります。 Python がない場合は、ダウンロード オプションの前のリンクを参照してください。
+このチュートリアルを開始する前に、開発マシンに [Python](https://www.python.org/) ( [ピ](https://pypi.org/project/pip/)ップ付き) がインストールされている必要があります。 Python をお持ちではない場合は、ダウンロード オプションの前のリンクを参照してください。
 
-また、メールボックスを持つ個人用の Microsoft アカウントが Outlook.com Microsoft の仕事用アカウントまたは学校アカウントである必要があります。 Microsoft アカウントをお持ちない場合は、無料アカウントを取得するためのオプションが 2 つ提供されています。
+また、ユーザーにメールボックスを持つ個人用 Microsoft アカウント Outlook.com、Microsoft の仕事用または学校用のアカウントを使用する必要があります。 Microsoft アカウントをお持ちでない場合は、無料アカウントを取得するためのオプションが 2 つご利用できます。
 
 - 新しい [個人用 Microsoft アカウントにサインアップできます](https://signup.live.com/signup?wa=wsignin1.0&rpsnv=12&ct=1454618383&rver=6.4.6456.0&wp=MBI_SSL_SHARED&wreply=https://mail.live.com/default.aspx&id=64855&cbcxt=mai&bk=1454618383&uiflavor=web&uaid=b213a65b4fdc484382b6622b3ecaa547&mkt=E-US&lc=1033&lic=1)。
-- Office [365 開発者プログラムにサインアップして、365](https://developer.microsoft.com/office/dev-program) サブスクリプションを無料Office取得できます。
+- [365 開発者プログラムにサインアップOffice 365](https://developer.microsoft.com/office/dev-program)サブスクリプションの無料Office取得できます。
 
 > [!NOTE]
-> このチュートリアルは、Python バージョン 3.9.0 および Django バージョン 3.1.4 で記述されています。 このガイドの手順は他のバージョンでも動作する可能性がありますが、テストは行ってはいではありません。
+> このチュートリアルは、Python バージョン 3.9.2 と Django バージョン 3.2 で記述されています。 このガイドの手順は、他のバージョンでも動作しますが、テストされていない場合があります。
 
 ## <a name="feedback"></a>フィードバック
 
